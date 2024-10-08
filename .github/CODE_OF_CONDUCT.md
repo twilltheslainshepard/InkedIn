@@ -17,7 +17,7 @@ diverse, inclusive, and healthy community.
 
 Examples of behavior that contributes to a positive environment for our
 community include:
-
+* No distracted use use technology (e.g. phones away) during all team meetings
 * Demonstrating empathy and kindness toward other people
 * Being respectful of differing opinions, viewpoints, and experiences
 * Giving and gracefully accepting constructive feedback
@@ -25,6 +25,25 @@ community include:
   and learning from the experience
 * Focusing on what is best not just for us as individuals, but for the overall
   community
+* Decisions are to be made through zen voting.
+* Attendance: One in person meeting a week(minimum, to be changed per team's description),
+  * mandatory once a day discord check in regarding progress
+    * Shall a meeting be missed, it is to be excused due to valid reasons           such as illness and/or getting shot.
+    * a recap will be provided to the person who missed said meeting
+* Assignments are to be assigned through a first-come, first-served basis.
+  * Unassigned tasks will be distributed to balance the workload across the       team
+  * If a member is not contributing, the TA or instructor will be involved
+* Main source communcation is Discord/SMS,
+  * As stated previously, Daily Checkins through Discord will be used to          ensure full participation.
+  * Strengths and interests by members will be honored through team shoutouts.
+* Meeting times and Locations will be decided through Checkins
+* CJ will be taking Notes in meetings which will be shared on a google doc.
+  * Agenda link: (insert)    
+* Members are expected to be within 15 minutes of the meeting time
+* Each member is encouraged to speak for however long as long as it             contributes to the cause
+* If a member is not following the rules, the issue will first be addressed     verbally
+  * If unresolved, it will escalate to a warning, and further involvement         from the TA and instructor if necessary
+  
 
 Examples of unacceptable behavior include:
 
