@@ -152,3 +152,4 @@ For answers to common questions about this code of conduct, see the FAQ at
 [translations]: https://www.contributor-covenant.org/translations
 
 ![Thomas Williams Signature](/../main/src/signature/WilliamsThomasSignature.jpeg)
+![Nathan Murphy Signature](/../main/src/signature/NathanMurphySignature.jpg)
