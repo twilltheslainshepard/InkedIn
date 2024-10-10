@@ -153,4 +153,4 @@ For answers to common questions about this code of conduct, see the FAQ at
 
 ![Thomas Williams Signature](/../main/src/signature/WilliamsThomasSignature.jpeg)
 ![Nathan Murphy Signature](/../main/src/signature/NathanMurphySignature.jpg)
-![CJ Balmaceda Signature](/../main/src/signature/"CJBalmacedasig.jpg" )
+![CJ Balmaceda Signature](/../main/src/signature/CJBalmacedasig.jpg)
