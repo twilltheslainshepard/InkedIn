@@ -1,1 +1,3 @@
-filler
+InkedIn is a mobile app designed to help people find tattoo artists who are currently available for walk-ins or same-day appointments. The platform displays 
+artists who have their status set to “available” making it easy for users to find and book a tattoo artist in real time. User’s can view artists' portfolio, 
+their flash pieces, to get inspiration for a spontaneous tattoo. With InkedIn, getting a convenient, spontaneous, and hassle free tattoo has never been easier.
