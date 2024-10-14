@@ -12,9 +12,9 @@ Observation 2:
 
 Observation 3:
 
-    Observation Statement:
-    Supporting Data:
-    Team Action (if any):
+    Observation Statement: For the majority of people who have gotten a tattoo they found their artists through word of mouth.
+    Supporting Data: ![Screenshot of supporting data](/../main/src/signature/dataChart.png)
+    Team Action (if any): Maybe add a feature that allows users to add each other as friends and they can then recommend artists they like.
 
 Observation 4:
 
