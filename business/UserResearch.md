@@ -1,12 +1,12 @@
 Observation 1: 
 
-    Observation Statement:
-    Supporting Data:
-    Team Action (if any):
+    Observation Statement: There is an even split of people who prefer meeting in person vs talking online to their artist.
+    Supporting Data: Out of the 37.6% of people who have had tattoos, it's split evenly for those who like to call/message and those who go in for consultations.
+    Team Action (if any): Add an option to cater to both crowds, or perhaps make online consultation more appealing.
   
 Observation 2:
 
-    Observation Statement: A najority of people have had a positive experience booking an appointment online.
+    Observation Statement: A majority of people have had a positive experience booking an appointment online.
     Supporting Data: the question "Have you ever booked a tattoo appointment through an app or website before? If yes, how was the experience?" illicited 16 responses, 31.3 percent of which answered "yes, it was positive"
     Team Action (if any):
 
