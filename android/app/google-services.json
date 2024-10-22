@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "282840658029",
+    "project_id": "inkedin-4fc34",
+    "storage_bucket": "inkedin-4fc34.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:282840658029:android:7621ab30d5ec6367cecf64",
+        "android_client_info": {
+          "package_name": "com.mycompany.inkedin"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZgWVvfuTQe2T__9NWjA9zcZy2RiKsbpw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
