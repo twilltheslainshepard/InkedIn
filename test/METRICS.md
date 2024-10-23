@@ -5,4 +5,4 @@ https://docs.google.com/presentation/d/1ET1RAnLUrFANDzgP8OxCTlyuBuQxU_lUydT5go7_
 - Metric 2 (Engagement) - Google Analytics via Firebase, see how long people spend on explore page and track general data using it. 
 - Metric 3 (Adoption) - (how to collect)
 - Metric 4 (Retention) - (how to collect)
-- Metric 5 (Task Success) - (how to collect)
+- Metric 5 (Task Success) - Implement event tracking within firebase to moniter successful bookings and error-free navigating through the booking process (golden process).
