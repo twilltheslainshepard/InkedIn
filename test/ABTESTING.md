@@ -37,3 +37,20 @@ decline the current offer and edit anything if necessary
 **Variations** - Different locations of button, (near save button or near bottom), different levels of ease in actually sharing (one click to share, or a few menus), how much is actually shared (just a link to the photo, or a image with blurb?), how much info the friend/shared to user can see without an account (some, all, just a thumbnail ).
 
 
+--------------------------------------------------------------------------------
+
+**A/B Test Name:** Experience survey - short vs long version
+
+**User Story Number:** US6: Post appointment feedback
+
+**Metrics:** User review, Happiness
+
+**Hypothesis:** A shorter post tattoo experience survey will increase completion rates without negatively affecting the quality of the feedback, leading to more users providing feedback.
+	- Problem: Long surveys may discourage users from completing them, resulting in lower feedback volume and skewed data. We 		want to balance between quality and quantity of feedback.
+
+**Experiment** - 50% of users will receive a short version of the survey with 3 key questions in the form of a yes or no button response, while the other 50% will receive the same 3 key questions but the answer will be in free-response form longer version. We’ll track survey completion rates and average ratings in google analytics.
+
+**Variations** - 
+	a) Long version: 3 free response questions
+	b) Short version: 3 questions (yes or no)
+
