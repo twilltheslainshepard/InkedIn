@@ -50,9 +50,10 @@ decline the current offer and edit anything if necessary
 
 **Experiment** - 50% of users will receive a short version of the survey with 3 key questions in the form of a yes or no button response, while the other 50% will receive the same 3 key questions but the answer will be in free-response form longer version. We’ll track survey completion rates and average ratings in google analytics.
 
-**Variations** - 
-	a) Long version: 3 free response questions
-	b) Short version: 3 questions (yes or no)
+**Variations** 
+a) Long version: 3 free response questions
+b) Short version: 3 questions (yes or no)
+
 --------------------------------------------------------------------------------
 
 **A/B Test Name:** Post-Pop up dimensions
