@@ -53,4 +53,22 @@ decline the current offer and edit anything if necessary
 **Variations** - 
 	a) Long version: 3 free response questions
 	b) Short version: 3 questions (yes or no)
+--------------------------------------------------------------------------------
+
+**A/B Test Name:** Post-Pop up dimensions
+
+**User Story Number:**  US4: Golden Path
+
+**Metrics:** Task success 
+
+**Hypothesis:** We want users to feel like they have freedom of navigation and don’t feel restrained by the UI. Users should feel like they can do whatever they desire when navigating forwards and backwards through our golden path. With a whole new screen everytime you click a tattoo design, it may feel too forced because the user may want only a preview. A solution could be to make the page more of a pop-up style that doesn’t cover the entire screen. This would still show the explore page behind the pop-up and allow for easy back navigation. 
+
+**Experiment**  We will give only 20% of users the fullscreen tattoo page, while the rest will see the normal pop-up style. This way we are not negatively affecting the user base. Hopefully this will confirm the hypothesis that a whole new page for the tattoo designs is too clunky, and that a small pop-up is more user friendly. 
+
+
+**Variations** 
+Small vs large pop-up
+Rounded corners
+Back navigation by tapping outside the pop-up
+
 
