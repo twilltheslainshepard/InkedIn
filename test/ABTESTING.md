@@ -68,8 +68,8 @@ b) Short version: 3 questions (yes or no)
 
 
 **Variations** 
-Small vs large pop-up
-Rounded corners
-Back navigation by tapping outside the pop-up
+- Small vs large pop-up
+- Rounded corners
+- Back navigation by tapping outside the pop-up
 
 
