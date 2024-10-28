@@ -6,7 +6,7 @@ import '../flutter_flow/flutter_flow_util.dart';
 import 'schema/util/firestore_util.dart';
 
 import 'schema/users_record.dart';
-import 'schema/artists_record.dart';
+import 'schema/artist_posts_record.dart';
 
 export 'dart:async' show StreamSubscription;
 export 'package:cloud_firestore/cloud_firestore.dart' hide Order;
@@ -16,7 +16,7 @@ export 'schema/util/firestore_util.dart';
 export 'schema/util/schema_util.dart';
 
 export 'schema/users_record.dart';
-export 'schema/artists_record.dart';
+export 'schema/artist_posts_record.dart';
 
 /// Functions to query UsersRecords (as a Stream and as a Future).
 Future<int> queryUsersRecordCount({
@@ -55,38 +55,38 @@ Future<List<UsersRecord>> queryUsersRecordOnce({
       singleRecord: singleRecord,
     );
 
-/// Functions to query ArtistsRecords (as a Stream and as a Future).
-Future<int> queryArtistsRecordCount({
+/// Functions to query ArtistPostsRecords (as a Stream and as a Future).
+Future<int> queryArtistPostsRecordCount({
   Query Function(Query)? queryBuilder,
   int limit = -1,
 }) =>
     queryCollectionCount(
-      ArtistsRecord.collection,
+      ArtistPostsRecord.collection,
       queryBuilder: queryBuilder,
       limit: limit,
     );
 
-Stream<List<ArtistsRecord>> queryArtistsRecord({
+Stream<List<ArtistPostsRecord>> queryArtistPostsRecord({
   Query Function(Query)? queryBuilder,
   int limit = -1,
   bool singleRecord = false,
 }) =>
     queryCollection(
-      ArtistsRecord.collection,
-      ArtistsRecord.fromSnapshot,
+      ArtistPostsRecord.collection,
+      ArtistPostsRecord.fromSnapshot,
       queryBuilder: queryBuilder,
       limit: limit,
       singleRecord: singleRecord,
     );
 
-Future<List<ArtistsRecord>> queryArtistsRecordOnce({
+Future<List<ArtistPostsRecord>> queryArtistPostsRecordOnce({
   Query Function(Query)? queryBuilder,
   int limit = -1,
   bool singleRecord = false,
 }) =>
     queryCollectionOnce(
-      ArtistsRecord.collection,
-      ArtistsRecord.fromSnapshot,
+      ArtistPostsRecord.collection,
+      ArtistPostsRecord.fromSnapshot,
       queryBuilder: queryBuilder,
       limit: limit,
       singleRecord: singleRecord,

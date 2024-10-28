@@ -94,6 +94,46 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'DummyPage',
           path: '/dummyPage',
           builder: (context, params) => const DummyPageWidget(),
+        ),
+        FFRoute(
+          name: 'businessAccountSetup',
+          path: '/businessAccountSetup',
+          builder: (context, params) => const BusinessAccountSetupWidget(),
+        ),
+        FFRoute(
+          name: 'userAccountSetup',
+          path: '/userAccountSetup',
+          builder: (context, params) => const UserAccountSetupWidget(),
+        ),
+        FFRoute(
+          name: 'explorePage',
+          path: '/explorePage',
+          builder: (context, params) => const ExplorePageWidget(),
+        ),
+        FFRoute(
+          name: 'artistDisplayPage',
+          path: '/artistDisplayPage',
+          builder: (context, params) => const ArtistDisplayPageWidget(),
+        ),
+        FFRoute(
+          name: 'userProfile',
+          path: '/userProfile',
+          builder: (context, params) => const UserProfileWidget(),
+        ),
+        FFRoute(
+          name: 'createNewPost',
+          path: '/createNewPost',
+          builder: (context, params) => const CreateNewPostWidget(),
+        ),
+        FFRoute(
+          name: 'userSettings',
+          path: '/userSettings',
+          builder: (context, params) => const UserSettingsWidget(),
+        ),
+        FFRoute(
+          name: 'artistProfile',
+          path: '/artistProfile',
+          builder: (context, params) => const ArtistProfileWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

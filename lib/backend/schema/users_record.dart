@@ -50,6 +50,31 @@ class UsersRecord extends FirestoreRecord {
   String get uid => _uid ?? '';
   bool hasUid() => _uid != null;
 
+  // "address" field.
+  String? _address;
+  String get address => _address ?? '';
+  bool hasAddress() => _address != null;
+
+  // "tattoo_shop_name" field.
+  String? _tattooShopName;
+  String get tattooShopName => _tattooShopName ?? '';
+  bool hasTattooShopName() => _tattooShopName != null;
+
+  // "tattoo_shop_license" field.
+  String? _tattooShopLicense;
+  String get tattooShopLicense => _tattooShopLicense ?? '';
+  bool hasTattooShopLicense() => _tattooShopLicense != null;
+
+  // "tattoo_shop_address" field.
+  String? _tattooShopAddress;
+  String get tattooShopAddress => _tattooShopAddress ?? '';
+  bool hasTattooShopAddress() => _tattooShopAddress != null;
+
+  // "account_type" field.
+  String? _accountType;
+  String get accountType => _accountType ?? '';
+  bool hasAccountType() => _accountType != null;
+
   void _initializeFields() {
     _email = snapshotData['email'] as String?;
     _displayName = snapshotData['display_name'] as String?;
@@ -58,6 +83,11 @@ class UsersRecord extends FirestoreRecord {
     _phoneNumber = snapshotData['phone_number'] as String?;
     _birthday = snapshotData['birthday'] as DateTime?;
     _uid = snapshotData['uid'] as String?;
+    _address = snapshotData['address'] as String?;
+    _tattooShopName = snapshotData['tattoo_shop_name'] as String?;
+    _tattooShopLicense = snapshotData['tattoo_shop_license'] as String?;
+    _tattooShopAddress = snapshotData['tattoo_shop_address'] as String?;
+    _accountType = snapshotData['account_type'] as String?;
   }
 
   static CollectionReference get collection =>
@@ -101,6 +131,11 @@ Map<String, dynamic> createUsersRecordData({
   String? phoneNumber,
   DateTime? birthday,
   String? uid,
+  String? address,
+  String? tattooShopName,
+  String? tattooShopLicense,
+  String? tattooShopAddress,
+  String? accountType,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -111,6 +146,11 @@ Map<String, dynamic> createUsersRecordData({
       'phone_number': phoneNumber,
       'birthday': birthday,
       'uid': uid,
+      'address': address,
+      'tattoo_shop_name': tattooShopName,
+      'tattoo_shop_license': tattooShopLicense,
+      'tattoo_shop_address': tattooShopAddress,
+      'account_type': accountType,
     }.withoutNulls,
   );
 
@@ -128,7 +168,12 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e1?.createdTime == e2?.createdTime &&
         e1?.phoneNumber == e2?.phoneNumber &&
         e1?.birthday == e2?.birthday &&
-        e1?.uid == e2?.uid;
+        e1?.uid == e2?.uid &&
+        e1?.address == e2?.address &&
+        e1?.tattooShopName == e2?.tattooShopName &&
+        e1?.tattooShopLicense == e2?.tattooShopLicense &&
+        e1?.tattooShopAddress == e2?.tattooShopAddress &&
+        e1?.accountType == e2?.accountType;
   }
 
   @override
@@ -139,7 +184,12 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e?.createdTime,
         e?.phoneNumber,
         e?.birthday,
-        e?.uid
+        e?.uid,
+        e?.address,
+        e?.tattooShopName,
+        e?.tattooShopLicense,
+        e?.tattooShopAddress,
+        e?.accountType
       ]);
 
   @override

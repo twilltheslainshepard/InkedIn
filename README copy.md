@@ -1,2 +1,0 @@
-# OpenSourceRepoTemplate
-OpenSourceRepoTemplate
