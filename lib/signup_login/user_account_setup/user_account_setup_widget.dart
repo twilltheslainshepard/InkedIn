@@ -24,6 +24,8 @@ class _UserAccountSetupWidgetState extends State<UserAccountSetupWidget> {
     super.initState();
     _model = createModel(context, () => UserAccountSetupModel());
 
+    logFirebaseEvent('screen_view',
+        parameters: {'screen_name': 'userAccountSetup'});
     _model.textController1 ??= TextEditingController();
     _model.textFieldFocusNode1 ??= FocusNode();
 
@@ -282,6 +284,9 @@ class _UserAccountSetupWidgetState extends State<UserAccountSetupWidget> {
                           children: [
                             FFButtonWidget(
                               onPressed: () async {
+                                logFirebaseEvent(
+                                    'USER_ACCOUNT_SETUP_SELECT_BIRTHDAY_BTN_O');
+                                logFirebaseEvent('Button_date_time_picker');
                                 final datePickedDate = await showDatePicker(
                                   context: context,
                                   initialDate: getCurrentTimestamp,
@@ -341,11 +346,19 @@ class _UserAccountSetupWidgetState extends State<UserAccountSetupWidget> {
                 children: [
                   FFButtonWidget(
                     onPressed: () async {
+                      logFirebaseEvent(
+                          'USER_ACCOUNT_SETUP_CreateAccountButton_O');
+                      logFirebaseEvent('CreateAccountButton_backend_call');
+
                       await currentUserReference!.update(createUsersRecordData(
                         displayName: _model.textController1.text,
                         address: _model.textController2.text,
                         birthday: _model.datePicked,
                       ));
+                      logFirebaseEvent(
+                          'CreateAccountButton_google_analytics_eve');
+                      logFirebaseEvent('Finished User Onboarding');
+                      logFirebaseEvent('CreateAccountButton_navigate_to');
 
                       context.pushNamed('DummyPage');
                     },

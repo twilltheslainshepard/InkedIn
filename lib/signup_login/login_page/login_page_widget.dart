@@ -23,6 +23,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
     super.initState();
     _model = createModel(context, () => LoginPageModel());
 
+    logFirebaseEvent('screen_view', parameters: {'screen_name': 'LoginPage'});
     _model.loginEmailTextController ??= TextEditingController();
     _model.loginEmailFocusNode ??= FocusNode();
 
@@ -245,6 +246,8 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                   ),
                   FFButtonWidget(
                     onPressed: () async {
+                      logFirebaseEvent('LOGIN_PAGE_PAGE_LOGIN_BTN_ON_TAP');
+                      logFirebaseEvent('Button_auth');
                       GoRouter.of(context).prepareAuthEvent();
 
                       final user = await authManager.signInWithEmail(
@@ -256,12 +259,16 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                         return;
                       }
 
+                      logFirebaseEvent('Button_wait__delay');
                       await Future.delayed(const Duration(milliseconds: 1000));
+                      logFirebaseEvent('Button_wait__delay');
                       await Future.delayed(const Duration(milliseconds: 1000));
+                      logFirebaseEvent('Button_validate_form');
                       if (_model.formKey.currentState == null ||
                           !_model.formKey.currentState!.validate()) {
                         return;
                       }
+                      logFirebaseEvent('Button_navigate_to');
 
                       context.goNamedAuth('DummyPage', context.mounted);
                     },
@@ -298,6 +305,9 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                     hoverColor: Colors.transparent,
                     highlightColor: Colors.transparent,
                     onTap: () async {
+                      logFirebaseEvent('LOGIN_PAGE_PAGE_SIgnupLink_ON_TAP');
+                      logFirebaseEvent('SIgnupLink_navigate_to');
+
                       context.pushNamed('SignupPage');
                     },
                     child: Text(

@@ -26,6 +26,8 @@ class _ArtistDisplayPageWidgetState extends State<ArtistDisplayPageWidget>
     super.initState();
     _model = createModel(context, () => ArtistDisplayPageModel());
 
+    logFirebaseEvent('screen_view',
+        parameters: {'screen_name': 'artistDisplayPage'});
     _model.tabBarController = TabController(
       vsync: this,
       length: 2,
@@ -133,7 +135,8 @@ class _ArtistDisplayPageWidgetState extends State<ArtistDisplayPageWidget>
                                           borderRadius:
                                               BorderRadius.circular(8.0),
                                           child: Image.network(
-                                            'https://picsum.photos/seed/516/600',
+                                            artistDisplayPageUsersRecord
+                                                .photoUrl,
                                             width: 300.0,
                                             height: 200.0,
                                             fit: BoxFit.cover,
@@ -297,12 +300,13 @@ class _ArtistDisplayPageWidgetState extends State<ArtistDisplayPageWidget>
                                             children: [
                                               Expanded(
                                                 child: StreamBuilder<
-                                                    List<ArtistPostsRecord>>(
+                                                    List<
+                                                        ArtistFlashPostRecord>>(
                                                   stream:
-                                                      queryArtistPostsRecord(
+                                                      queryArtistFlashPostRecord(
                                                     queryBuilder:
-                                                        (artistPostsRecord) =>
-                                                            artistPostsRecord
+                                                        (artistFlashPostRecord) =>
+                                                            artistFlashPostRecord
                                                                 .where(
                                                                   'postUser',
                                                                   isEqualTo:
@@ -335,8 +339,8 @@ class _ArtistDisplayPageWidgetState extends State<ArtistDisplayPageWidget>
                                                         ),
                                                       );
                                                     }
-                                                    List<ArtistPostsRecord>
-                                                        gridViewArtistPostsRecordList =
+                                                    List<ArtistFlashPostRecord>
+                                                        gridViewArtistFlashPostRecordList =
                                                         snapshot.data!;
 
                                                     return GridView.builder(
@@ -349,18 +353,18 @@ class _ArtistDisplayPageWidgetState extends State<ArtistDisplayPageWidget>
                                                       scrollDirection:
                                                           Axis.vertical,
                                                       itemCount:
-                                                          gridViewArtistPostsRecordList
+                                                          gridViewArtistFlashPostRecordList
                                                               .length,
                                                       itemBuilder: (context,
                                                           gridViewIndex) {
-                                                        final gridViewArtistPostsRecord =
-                                                            gridViewArtistPostsRecordList[
+                                                        final gridViewArtistFlashPostRecord =
+                                                            gridViewArtistFlashPostRecordList[
                                                                 gridViewIndex];
                                                         return StreamBuilder<
                                                             UsersRecord>(
                                                           stream: UsersRecord
                                                               .getDocument(
-                                                                  gridViewArtistPostsRecord
+                                                                  gridViewArtistFlashPostRecord
                                                                       .postUser!),
                                                           builder: (context,
                                                               snapshot) {
@@ -427,9 +431,141 @@ class _ArtistDisplayPageWidgetState extends State<ArtistDisplayPageWidget>
                                               ),
                                             ],
                                           ),
-                                          const Column(
+                                          Column(
                                             mainAxisSize: MainAxisSize.max,
-                                            children: [],
+                                            children: [
+                                              Expanded(
+                                                child: StreamBuilder<
+                                                    List<
+                                                        ArtistPortfolioPostRecord>>(
+                                                  stream:
+                                                      queryArtistPortfolioPostRecord(
+                                                    queryBuilder:
+                                                        (artistPortfolioPostRecord) =>
+                                                            artistPortfolioPostRecord
+                                                                .where(
+                                                                  'postUser',
+                                                                  isEqualTo:
+                                                                      artistDisplayPageUsersRecord
+                                                                          .reference,
+                                                                )
+                                                                .orderBy(
+                                                                    'timePosted',
+                                                                    descending:
+                                                                        true),
+                                                    limit: 20,
+                                                  ),
+                                                  builder: (context, snapshot) {
+                                                    // Customize what your widget looks like when it's loading.
+                                                    if (!snapshot.hasData) {
+                                                      return Center(
+                                                        child: SizedBox(
+                                                          width: 50.0,
+                                                          height: 50.0,
+                                                          child:
+                                                              CircularProgressIndicator(
+                                                            valueColor:
+                                                                AlwaysStoppedAnimation<
+                                                                    Color>(
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .primary,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      );
+                                                    }
+                                                    List<ArtistPortfolioPostRecord>
+                                                        gridViewArtistPortfolioPostRecordList =
+                                                        snapshot.data!;
+
+                                                    return GridView.builder(
+                                                      padding: EdgeInsets.zero,
+                                                      gridDelegate:
+                                                          const SliverGridDelegateWithFixedCrossAxisCount(
+                                                        crossAxisCount: 3,
+                                                        childAspectRatio: 1.0,
+                                                      ),
+                                                      scrollDirection:
+                                                          Axis.vertical,
+                                                      itemCount:
+                                                          gridViewArtistPortfolioPostRecordList
+                                                              .length,
+                                                      itemBuilder: (context,
+                                                          gridViewIndex) {
+                                                        final gridViewArtistPortfolioPostRecord =
+                                                            gridViewArtistPortfolioPostRecordList[
+                                                                gridViewIndex];
+                                                        return StreamBuilder<
+                                                            UsersRecord>(
+                                                          stream: UsersRecord
+                                                              .getDocument(
+                                                                  gridViewArtistPortfolioPostRecord
+                                                                      .postUser!),
+                                                          builder: (context,
+                                                              snapshot) {
+                                                            // Customize what your widget looks like when it's loading.
+                                                            if (!snapshot
+                                                                .hasData) {
+                                                              return Center(
+                                                                child: SizedBox(
+                                                                  width: 50.0,
+                                                                  height: 50.0,
+                                                                  child:
+                                                                      CircularProgressIndicator(
+                                                                    valueColor:
+                                                                        AlwaysStoppedAnimation<
+                                                                            Color>(
+                                                                      FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .primary,
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              );
+                                                            }
+
+                                                            final containerUsersRecord =
+                                                                snapshot.data!;
+
+                                                            return Container(
+                                                              width: 100.0,
+                                                              height: 100.0,
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .secondaryBackground,
+                                                                border:
+                                                                    Border.all(
+                                                                  color: Colors
+                                                                      .black,
+                                                                ),
+                                                              ),
+                                                              child: ClipRRect(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            0.0),
+                                                                child: Image
+                                                                    .network(
+                                                                  artistDisplayPageUsersRecord
+                                                                      .photoUrl,
+                                                                  width: 200.0,
+                                                                  height: 200.0,
+                                                                  fit: BoxFit
+                                                                      .cover,
+                                                                ),
+                                                              ),
+                                                            );
+                                                          },
+                                                        );
+                                                      },
+                                                    );
+                                                  },
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ],
                                       ),

@@ -24,6 +24,7 @@ class _SignupPageWidgetState extends State<SignupPageWidget> {
     super.initState();
     _model = createModel(context, () => SignupPageModel());
 
+    logFirebaseEvent('screen_view', parameters: {'screen_name': 'SignupPage'});
     _model.signupEmailTextController ??= TextEditingController();
     _model.signupEmailFocusNode ??= FocusNode();
 
@@ -331,6 +332,7 @@ class _SignupPageWidgetState extends State<SignupPageWidget> {
                                   FlutterFlowTheme.of(context).alternate,
                             ),
                             child: Checkbox(
+                              key: const ValueKey('userorartist'),
                               value: _model.businessCheckboxValue ??= false,
                               onChanged: (newValue) async {
                                 safeSetState(() =>
@@ -351,6 +353,8 @@ class _SignupPageWidgetState extends State<SignupPageWidget> {
                   ),
                   FFButtonWidget(
                     onPressed: () async {
+                      logFirebaseEvent('SIGNUP_PAGE_PAGE_LoginButton_ON_TAP');
+                      logFirebaseEvent('LoginButton_auth');
                       GoRouter.of(context).prepareAuthEvent();
                       if (_model.signupPasswordTextController.text !=
                           _model.confirmPasswordTextController.text) {
@@ -374,21 +378,43 @@ class _SignupPageWidgetState extends State<SignupPageWidget> {
                       }
 
                       if (_model.businessCheckboxValue!) {
+                        logFirebaseEvent('LoginButton_backend_call');
+
                         await currentUserReference!
                             .update(createUsersRecordData(
                           accountType: 'business',
                         ));
+                        logFirebaseEvent('LoginButton_navigate_to');
 
                         context.pushNamedAuth(
                             'businessAccountSetup', context.mounted);
+
+                        logFirebaseEvent('LoginButton_google_analytics_event');
+                        logFirebaseEvent(
+                          'Initial_Signup_Status',
+                          parameters: {
+                            'IsBusiness': true,
+                          },
+                        );
                       } else {
+                        logFirebaseEvent('LoginButton_backend_call');
+
                         await currentUserReference!
                             .update(createUsersRecordData(
                           accountType: 'user',
                         ));
+                        logFirebaseEvent('LoginButton_navigate_to');
 
                         context.pushNamedAuth(
                             'userAccountSetup', context.mounted);
+
+                        logFirebaseEvent('LoginButton_google_analytics_event');
+                        logFirebaseEvent(
+                          'Initial_Signup_Status',
+                          parameters: {
+                            'isBusiness': false,
+                          },
+                        );
                       }
                     },
                     text: 'Signup',
@@ -424,6 +450,9 @@ class _SignupPageWidgetState extends State<SignupPageWidget> {
                     hoverColor: Colors.transparent,
                     highlightColor: Colors.transparent,
                     onTap: () async {
+                      logFirebaseEvent('SIGNUP_PAGE_PAGE_SIgnupLink_ON_TAP');
+                      logFirebaseEvent('SIgnupLink_navigate_to');
+
                       context.pushNamed('LoginPage');
                     },
                     child: Text(

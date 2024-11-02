@@ -1,7 +1,9 @@
+import '/auth/firebase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_drop_down.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
 import 'package:flutter/material.dart';
 import 'explore_page_model.dart';
@@ -24,6 +26,7 @@ class _ExplorePageWidgetState extends State<ExplorePageWidget> {
     super.initState();
     _model = createModel(context, () => ExplorePageModel());
 
+    logFirebaseEvent('screen_view', parameters: {'screen_name': 'explorePage'});
     _model.searchBarTextFieldTextController ??= TextEditingController();
     _model.searchBarTextFieldFocusNode ??= FocusNode();
 
@@ -72,6 +75,33 @@ class _ExplorePageWidgetState extends State<ExplorePageWidget> {
                               fit: BoxFit.fill,
                               alignment: const Alignment(0.0, 0.0),
                             ),
+                          ),
+                        ),
+                        FFButtonWidget(
+                          onPressed: () async {
+                            logFirebaseEvent(
+                                'EXPLORE_BACK_TO_DUMMY_BTN_ON_TAP');
+                            logFirebaseEvent('Button_navigate_to');
+
+                            context.pushNamed('DummyPage');
+                          },
+                          text: 'Back to Dummy Page',
+                          options: FFButtonOptions(
+                            height: 40.0,
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                16.0, 0.0, 16.0, 0.0),
+                            iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 0.0, 0.0),
+                            color: FlutterFlowTheme.of(context).tertiary,
+                            textStyle: FlutterFlowTheme.of(context)
+                                .titleSmall
+                                .override(
+                                  fontFamily: 'Inter Tight',
+                                  color: Colors.white,
+                                  letterSpacing: 0.0,
+                                ),
+                            elevation: 0.0,
+                            borderRadius: BorderRadius.circular(24.0),
                           ),
                         ),
                       ],
@@ -214,8 +244,22 @@ class _ExplorePageWidgetState extends State<ExplorePageWidget> {
                                 color: FlutterFlowTheme.of(context).info,
                                 size: 24.0,
                               ),
-                              onPressed: () {
-                                print('ProfileIconButton pressed ...');
+                              onPressed: () async {
+                                logFirebaseEvent(
+                                    'EXPLORE_ProfileIconButton_ON_TAP');
+                                if (valueOrDefault(
+                                        currentUserDocument?.accountType, '') ==
+                                    'business') {
+                                  logFirebaseEvent(
+                                      'ProfileIconButton_navigate_to');
+
+                                  context.pushNamed('artistProfile');
+                                } else {
+                                  logFirebaseEvent(
+                                      'ProfileIconButton_navigate_to');
+
+                                  context.pushNamed('userProfile');
+                                }
                               },
                             ),
                           ),

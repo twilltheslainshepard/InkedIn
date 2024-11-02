@@ -29,6 +29,8 @@ class _BusinessAccountSetupWidgetState
     super.initState();
     _model = createModel(context, () => BusinessAccountSetupModel());
 
+    logFirebaseEvent('screen_view',
+        parameters: {'screen_name': 'businessAccountSetup'});
     _model.textController1 ??= TextEditingController();
     _model.textFieldFocusNode1 ??= FocusNode();
 
@@ -366,6 +368,9 @@ class _BusinessAccountSetupWidgetState
                           children: [
                             FFButtonWidget(
                               onPressed: () async {
+                                logFirebaseEvent(
+                                    'BUSINESS_ACCOUNT_SETUP_SELECT_BIRTHDAY_B');
+                                logFirebaseEvent('Button_date_time_picker');
                                 final datePickedDate = await showDatePicker(
                                   context: context,
                                   initialDate: getCurrentTimestamp,
@@ -446,6 +451,10 @@ class _BusinessAccountSetupWidgetState
                                       size: 24.0,
                                     ),
                                     onPressed: () async {
+                                      logFirebaseEvent(
+                                          'BUSINESS_ACCOUNT_SETUP_image_ICN_ON_TAP');
+                                      logFirebaseEvent(
+                                          'IconButton_upload_media_to_firebase');
                                       final selectedMedia =
                                           await selectMediaWithSourceBottomSheet(
                                         context: context,
@@ -523,6 +532,10 @@ class _BusinessAccountSetupWidgetState
                         const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 20.0),
                     child: FFButtonWidget(
                       onPressed: () async {
+                        logFirebaseEvent(
+                            'BUSINESS_ACCOUNT_SETUP_CreateAccountButt');
+                        logFirebaseEvent('CreateAccountButton_backend_call');
+
                         await currentUserReference!
                             .update(createUsersRecordData(
                           displayName: _model.textController1.text,
@@ -531,6 +544,10 @@ class _BusinessAccountSetupWidgetState
                           photoUrl: _model.uploadedFileUrl,
                           birthday: _model.datePicked,
                         ));
+                        logFirebaseEvent(
+                            'CreateAccountButton_google_analytics_eve');
+                        logFirebaseEvent('Finished Business Onboarding');
+                        logFirebaseEvent('CreateAccountButton_navigate_to');
 
                         context.pushNamed('DummyPage');
                       },

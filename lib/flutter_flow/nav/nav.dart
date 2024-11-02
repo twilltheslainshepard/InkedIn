@@ -121,11 +121,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => const UserProfileWidget(),
         ),
         FFRoute(
-          name: 'createNewPost',
-          path: '/createNewPost',
-          builder: (context, params) => const CreateNewPostWidget(),
-        ),
-        FFRoute(
           name: 'userSettings',
           path: '/userSettings',
           builder: (context, params) => const UserSettingsWidget(),

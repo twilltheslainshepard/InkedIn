@@ -23,6 +23,7 @@ class _DummyPageWidgetState extends State<DummyPageWidget> {
     super.initState();
     _model = createModel(context, () => DummyPageModel());
 
+    logFirebaseEvent('screen_view', parameters: {'screen_name': 'DummyPage'});
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
@@ -66,9 +67,13 @@ class _DummyPageWidgetState extends State<DummyPageWidget> {
               hoverColor: Colors.transparent,
               highlightColor: Colors.transparent,
               onTap: () async {
+                logFirebaseEvent('DUMMY_PAGE_PAGE_Column_clo93e6z_ON_TAP');
+                logFirebaseEvent('Column_auth');
                 GoRouter.of(context).prepareAuthEvent();
                 await authManager.signOut();
                 GoRouter.of(context).clearRedirectLocation();
+
+                logFirebaseEvent('Column_navigate_to');
 
                 context.pushNamedAuth('LoginPage', context.mounted);
               },
@@ -79,13 +84,79 @@ class _DummyPageWidgetState extends State<DummyPageWidget> {
                 children: [
                   FFButtonWidget(
                     onPressed: () async {
+                      logFirebaseEvent('DUMMY_PAGE_PAGE_LOG_OUT_3_BTN_ON_TAP');
+                      logFirebaseEvent('Button_auth');
                       GoRouter.of(context).prepareAuthEvent();
                       await authManager.signOut();
                       GoRouter.of(context).clearRedirectLocation();
 
+                      logFirebaseEvent('Button_navigate_to');
+
                       context.pushNamedAuth('LoginPage', context.mounted);
                     },
                     text: 'LogOut :3',
+                    options: FFButtonOptions(
+                      height: 40.0,
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                      iconPadding:
+                          const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                      color: FlutterFlowTheme.of(context).tertiary,
+                      textStyle:
+                          FlutterFlowTheme.of(context).titleSmall.override(
+                                fontFamily: 'Inter Tight',
+                                color: Colors.white,
+                                letterSpacing: 0.0,
+                              ),
+                      elevation: 0.0,
+                      borderRadius: BorderRadius.circular(24.0),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(24.0),
+                    child: FFButtonWidget(
+                      onPressed: () async {
+                        logFirebaseEvent(
+                            'DUMMY_PAGE_PAGE_EXPLORE_PAGE_BTN_ON_TAP');
+                        logFirebaseEvent('Button_navigate_to');
+
+                        context.pushNamed('explorePage');
+                      },
+                      text: 'Explore Page',
+                      options: FFButtonOptions(
+                        height: 40.0,
+                        padding: const EdgeInsetsDirectional.fromSTEB(
+                            16.0, 0.0, 16.0, 0.0),
+                        iconPadding:
+                            const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                        color: FlutterFlowTheme.of(context).tertiary,
+                        textStyle:
+                            FlutterFlowTheme.of(context).titleSmall.override(
+                                  fontFamily: 'Inter Tight',
+                                  color: Colors.white,
+                                  letterSpacing: 0.0,
+                                ),
+                        elevation: 0.0,
+                        borderRadius: BorderRadius.circular(24.0),
+                      ),
+                    ),
+                  ),
+                  FFButtonWidget(
+                    onPressed: () async {
+                      logFirebaseEvent('DUMMY_PAGE_PAGE_PROFILE_BTN_ON_TAP');
+                      if (valueOrDefault(
+                              currentUserDocument?.accountType, '') ==
+                          'business') {
+                        logFirebaseEvent('Button_navigate_to');
+
+                        context.pushNamed('artistProfile');
+                      } else {
+                        logFirebaseEvent('Button_navigate_to');
+
+                        context.pushNamed('userProfile');
+                      }
+                    },
+                    text: 'Profile',
                     options: FFButtonOptions(
                       height: 40.0,
                       padding:

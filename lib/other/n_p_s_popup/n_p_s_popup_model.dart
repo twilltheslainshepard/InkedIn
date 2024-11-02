@@ -1,8 +1,8 @@
 import '/flutter_flow/flutter_flow_util.dart';
-import 'create_new_post_widget.dart' show CreateNewPostWidget;
+import 'n_p_s_popup_widget.dart' show NPSPopupWidget;
 import 'package:flutter/material.dart';
 
-class CreateNewPostModel extends FlutterFlowModel<CreateNewPostWidget> {
+class NPSPopupModel extends FlutterFlowModel<NPSPopupWidget> {
   @override
   void initState(BuildContext context) {}
 

@@ -6,7 +6,8 @@ import '../flutter_flow/flutter_flow_util.dart';
 import 'schema/util/firestore_util.dart';
 
 import 'schema/users_record.dart';
-import 'schema/artist_posts_record.dart';
+import 'schema/artist_portfolio_post_record.dart';
+import 'schema/artist_flash_post_record.dart';
 
 export 'dart:async' show StreamSubscription;
 export 'package:cloud_firestore/cloud_firestore.dart' hide Order;
@@ -16,7 +17,8 @@ export 'schema/util/firestore_util.dart';
 export 'schema/util/schema_util.dart';
 
 export 'schema/users_record.dart';
-export 'schema/artist_posts_record.dart';
+export 'schema/artist_portfolio_post_record.dart';
+export 'schema/artist_flash_post_record.dart';
 
 /// Functions to query UsersRecords (as a Stream and as a Future).
 Future<int> queryUsersRecordCount({
@@ -55,38 +57,75 @@ Future<List<UsersRecord>> queryUsersRecordOnce({
       singleRecord: singleRecord,
     );
 
-/// Functions to query ArtistPostsRecords (as a Stream and as a Future).
-Future<int> queryArtistPostsRecordCount({
+/// Functions to query ArtistPortfolioPostRecords (as a Stream and as a Future).
+Future<int> queryArtistPortfolioPostRecordCount({
   Query Function(Query)? queryBuilder,
   int limit = -1,
 }) =>
     queryCollectionCount(
-      ArtistPostsRecord.collection,
+      ArtistPortfolioPostRecord.collection,
       queryBuilder: queryBuilder,
       limit: limit,
     );
 
-Stream<List<ArtistPostsRecord>> queryArtistPostsRecord({
+Stream<List<ArtistPortfolioPostRecord>> queryArtistPortfolioPostRecord({
   Query Function(Query)? queryBuilder,
   int limit = -1,
   bool singleRecord = false,
 }) =>
     queryCollection(
-      ArtistPostsRecord.collection,
-      ArtistPostsRecord.fromSnapshot,
+      ArtistPortfolioPostRecord.collection,
+      ArtistPortfolioPostRecord.fromSnapshot,
       queryBuilder: queryBuilder,
       limit: limit,
       singleRecord: singleRecord,
     );
 
-Future<List<ArtistPostsRecord>> queryArtistPostsRecordOnce({
+Future<List<ArtistPortfolioPostRecord>> queryArtistPortfolioPostRecordOnce({
   Query Function(Query)? queryBuilder,
   int limit = -1,
   bool singleRecord = false,
 }) =>
     queryCollectionOnce(
-      ArtistPostsRecord.collection,
-      ArtistPostsRecord.fromSnapshot,
+      ArtistPortfolioPostRecord.collection,
+      ArtistPortfolioPostRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+/// Functions to query ArtistFlashPostRecords (as a Stream and as a Future).
+Future<int> queryArtistFlashPostRecordCount({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      ArtistFlashPostRecord.collection,
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
+Stream<List<ArtistFlashPostRecord>> queryArtistFlashPostRecord({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      ArtistFlashPostRecord.collection,
+      ArtistFlashPostRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<ArtistFlashPostRecord>> queryArtistFlashPostRecordOnce({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      ArtistFlashPostRecord.collection,
+      ArtistFlashPostRecord.fromSnapshot,
       queryBuilder: queryBuilder,
       limit: limit,
       singleRecord: singleRecord,

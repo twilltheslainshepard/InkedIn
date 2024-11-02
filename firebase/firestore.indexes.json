@@ -1,7 +1,21 @@
 {
   "indexes": [
     {
-      "collectionGroup": "artistPosts",
+      "collectionGroup": "artistFlashPost",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "postUser",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "timePosted",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "artistPortfolioPost",
       "queryScope": "COLLECTION",
       "fields": [
         {

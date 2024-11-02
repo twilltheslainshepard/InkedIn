@@ -11,8 +11,6 @@ export '/other/explore_page/explore_page_widget.dart' show ExplorePageWidget;
 export '/artist/artist_display_page/artist_display_page_widget.dart'
     show ArtistDisplayPageWidget;
 export '/user/user_profile/user_profile_widget.dart' show UserProfileWidget;
-export '/artist/create_new_post/create_new_post_widget.dart'
-    show CreateNewPostWidget;
 export '/user/user_settings/user_settings_widget.dart' show UserSettingsWidget;
 export '/artist/artist_profile/artist_profile_widget.dart'
     show ArtistProfileWidget;

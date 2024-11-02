@@ -7,8 +7,8 @@ import '/backend/schema/util/firestore_util.dart';
 import 'index.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 
-class ArtistPostsRecord extends FirestoreRecord {
-  ArtistPostsRecord._(
+class ArtistFlashPostRecord extends FirestoreRecord {
+  ArtistFlashPostRecord._(
     super.reference,
     super.data,
   ) {
@@ -35,11 +35,6 @@ class ArtistPostsRecord extends FirestoreRecord {
   DateTime? get timePosted => _timePosted;
   bool hasTimePosted() => _timePosted != null;
 
-  // "postOwner" field.
-  bool? _postOwner;
-  bool get postOwner => _postOwner ?? false;
-  bool hasPostOwner() => _postOwner != null;
-
   // "postUser" field.
   DocumentReference? _postUser;
   DocumentReference? get postUser => _postUser;
@@ -50,50 +45,48 @@ class ArtistPostsRecord extends FirestoreRecord {
     _postTitle = snapshotData['postTitle'] as String?;
     _postDescription = snapshotData['postDescription'] as String?;
     _timePosted = snapshotData['timePosted'] as DateTime?;
-    _postOwner = snapshotData['postOwner'] as bool?;
     _postUser = snapshotData['postUser'] as DocumentReference?;
   }
 
   static CollectionReference get collection =>
-      FirebaseFirestore.instance.collection('artistPosts');
+      FirebaseFirestore.instance.collection('artistFlashPost');
 
-  static Stream<ArtistPostsRecord> getDocument(DocumentReference ref) =>
-      ref.snapshots().map((s) => ArtistPostsRecord.fromSnapshot(s));
+  static Stream<ArtistFlashPostRecord> getDocument(DocumentReference ref) =>
+      ref.snapshots().map((s) => ArtistFlashPostRecord.fromSnapshot(s));
 
-  static Future<ArtistPostsRecord> getDocumentOnce(DocumentReference ref) =>
-      ref.get().then((s) => ArtistPostsRecord.fromSnapshot(s));
+  static Future<ArtistFlashPostRecord> getDocumentOnce(DocumentReference ref) =>
+      ref.get().then((s) => ArtistFlashPostRecord.fromSnapshot(s));
 
-  static ArtistPostsRecord fromSnapshot(DocumentSnapshot snapshot) =>
-      ArtistPostsRecord._(
+  static ArtistFlashPostRecord fromSnapshot(DocumentSnapshot snapshot) =>
+      ArtistFlashPostRecord._(
         snapshot.reference,
         mapFromFirestore(snapshot.data() as Map<String, dynamic>),
       );
 
-  static ArtistPostsRecord getDocumentFromData(
+  static ArtistFlashPostRecord getDocumentFromData(
     Map<String, dynamic> data,
     DocumentReference reference,
   ) =>
-      ArtistPostsRecord._(reference, mapFromFirestore(data));
+      ArtistFlashPostRecord._(reference, mapFromFirestore(data));
 
   @override
   String toString() =>
-      'ArtistPostsRecord(reference: ${reference.path}, data: $snapshotData)';
+      'ArtistFlashPostRecord(reference: ${reference.path}, data: $snapshotData)';
 
   @override
   int get hashCode => reference.path.hashCode;
 
   @override
   bool operator ==(other) =>
-      other is ArtistPostsRecord &&
+      other is ArtistFlashPostRecord &&
       reference.path.hashCode == other.reference.path.hashCode;
 }
 
-Map<String, dynamic> createArtistPostsRecordData({
+Map<String, dynamic> createArtistFlashPostRecordData({
   String? flashPhoto,
   String? postTitle,
   String? postDescription,
   DateTime? timePosted,
-  bool? postOwner,
   DocumentReference? postUser,
 }) {
   final firestoreData = mapToFirestore(
@@ -102,7 +95,6 @@ Map<String, dynamic> createArtistPostsRecordData({
       'postTitle': postTitle,
       'postDescription': postDescription,
       'timePosted': timePosted,
-      'postOwner': postOwner,
       'postUser': postUser,
     }.withoutNulls,
   );
@@ -110,29 +102,28 @@ Map<String, dynamic> createArtistPostsRecordData({
   return firestoreData;
 }
 
-class ArtistPostsRecordDocumentEquality implements Equality<ArtistPostsRecord> {
-  const ArtistPostsRecordDocumentEquality();
+class ArtistFlashPostRecordDocumentEquality
+    implements Equality<ArtistFlashPostRecord> {
+  const ArtistFlashPostRecordDocumentEquality();
 
   @override
-  bool equals(ArtistPostsRecord? e1, ArtistPostsRecord? e2) {
+  bool equals(ArtistFlashPostRecord? e1, ArtistFlashPostRecord? e2) {
     return e1?.flashPhoto == e2?.flashPhoto &&
         e1?.postTitle == e2?.postTitle &&
         e1?.postDescription == e2?.postDescription &&
         e1?.timePosted == e2?.timePosted &&
-        e1?.postOwner == e2?.postOwner &&
         e1?.postUser == e2?.postUser;
   }
 
   @override
-  int hash(ArtistPostsRecord? e) => const ListEquality().hash([
+  int hash(ArtistFlashPostRecord? e) => const ListEquality().hash([
         e?.flashPhoto,
         e?.postTitle,
         e?.postDescription,
         e?.timePosted,
-        e?.postOwner,
         e?.postUser
       ]);
 
   @override
-  bool isValidKey(Object? o) => o is ArtistPostsRecord;
+  bool isValidKey(Object? o) => o is ArtistFlashPostRecord;
 }
