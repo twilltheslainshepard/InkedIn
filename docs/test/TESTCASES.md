@@ -6,6 +6,6 @@
 
 •<link to template slide> US3: Backend Management
 
-•<link to template slide> US4: {Golden Path description}
+•[US4: Golden Path: Regular user or artist can use app functionality] (https://docs.google.com/presentation/d/1K7fPC56S8VQBHkikyPF6oGQqhYp5Wi8zrhFfDaeHbgU/edit?usp=sharing)
 
 •<link to template slide> US5: Post Creation
