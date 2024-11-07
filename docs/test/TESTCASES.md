@@ -8,4 +8,4 @@
 
 •<link to template slide> US4: {Golden Path description}
 
-•<link to template slide> US5: …
+•<link to template slide> US5: Post Creation
