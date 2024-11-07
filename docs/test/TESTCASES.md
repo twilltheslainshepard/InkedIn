@@ -1,6 +1,6 @@
 # Test Cases
 
-•<link to template slide> US1: User Account Creation
+•[US1: User Account Creation](https://docs.google.com/presentation/d/1izVeg0lwgiXLig20wds37EOp1Mw1pdPrJ5gWijx_2rc/edit?usp=sharing)
 
 • [US2: User Login](https://docs.google.com/presentation/d/1yLvg2qkUb43ItoxmNf_4VPfgJjtEmov82dFa7KHwtr4/edit?usp=sharing)
 
@@ -8,4 +8,4 @@
 
 •[US4: Golden Path: Regular user or artist can use app functionality](https://docs.google.com/presentation/d/1K7fPC56S8VQBHkikyPF6oGQqhYp5Wi8zrhFfDaeHbgU/edit?usp=sharing)
 
-•<link to template slide> US5: Post Creation
+•[US7: Post Creation](https://docs.google.com/presentation/d/1izVeg0lwgiXLig20wds37EOp1Mw1pdPrJ5gWijx_2rc/edit?usp=sharing)
