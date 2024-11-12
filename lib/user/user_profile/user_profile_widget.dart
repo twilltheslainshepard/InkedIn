@@ -105,8 +105,12 @@ class _UserProfileWidgetState extends State<UserProfileWidget> {
                               color: FlutterFlowTheme.of(context).primary,
                               size: 24.0,
                             ),
-                            onPressed: () {
-                              print('IconButton pressed ...');
+                            onPressed: () async {
+                              logFirebaseEvent(
+                                  'USER_PROFILE_settings_sharp_ICN_ON_TAP');
+                              logFirebaseEvent('IconButton_navigate_to');
+
+                              context.pushNamed('userSettings');
                             },
                           ),
                         ),
@@ -170,13 +174,11 @@ class _UserProfileWidgetState extends State<UserProfileWidget> {
                             const EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 0.0, 5.0),
                         child: Text(
                           'Saved Tattoos',
-                          style: FlutterFlowTheme.of(context)
-                              .displaySmall
-                              .override(
-                                fontFamily: 'Inter Tight',
-                                fontSize: 20.0,
-                                letterSpacing: 0.0,
-                              ),
+                          style:
+                              FlutterFlowTheme.of(context).titleMedium.override(
+                                    fontFamily: 'Inter Tight',
+                                    letterSpacing: 0.0,
+                                  ),
                         ),
                       ),
                     ],
@@ -218,10 +220,9 @@ class _UserProfileWidgetState extends State<UserProfileWidget> {
                               child: Text(
                                 'My reservations',
                                 style: FlutterFlowTheme.of(context)
-                                    .displaySmall
+                                    .titleMedium
                                     .override(
                                       fontFamily: 'Inter Tight',
-                                      fontSize: 20.0,
                                       letterSpacing: 0.0,
                                     ),
                               ),

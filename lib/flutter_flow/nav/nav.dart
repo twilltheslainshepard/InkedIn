@@ -67,18 +67,21 @@ class AppStateNotifier extends ChangeNotifier {
   }
 }
 
-GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
+GoRouter createRouter(AppStateNotifier appStateNotifier, [Widget? entryPage]) =>
+    GoRouter(
       initialLocation: '/',
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
-      errorBuilder: (context, state) =>
-          appStateNotifier.loggedIn ? const DummyPageWidget() : const LoginPageWidget(),
+      errorBuilder: (context, state) => appStateNotifier.loggedIn
+          ? entryPage ?? const DummyPageWidget()
+          : const LoginPageWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
-          builder: (context, _) =>
-              appStateNotifier.loggedIn ? const DummyPageWidget() : const LoginPageWidget(),
+          builder: (context, _) => appStateNotifier.loggedIn
+              ? entryPage ?? const DummyPageWidget()
+              : const LoginPageWidget(),
         ),
         FFRoute(
           name: 'LoginPage',

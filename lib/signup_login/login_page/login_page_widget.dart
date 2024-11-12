@@ -89,6 +89,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                           child: SizedBox(
                             width: double.infinity,
                             child: TextFormField(
+                              key: const ValueKey('LoginEmail_orrf'),
                               controller: _model.loginEmailTextController,
                               focusNode: _model.loginEmailFocusNode,
                               autofocus: false,
@@ -161,6 +162,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                           child: SizedBox(
                             width: double.infinity,
                             child: TextFormField(
+                              key: const ValueKey('LoginPassword_00at'),
                               controller: _model.loginPasswordTextController,
                               focusNode: _model.loginPasswordFocusNode,
                               autofocus: false,
@@ -245,6 +247,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                     ),
                   ),
                   FFButtonWidget(
+                    key: const ValueKey('Button_2wtk'),
                     onPressed: () async {
                       logFirebaseEvent('LOGIN_PAGE_PAGE_LOGIN_BTN_ON_TAP');
                       logFirebaseEvent('Button_auth');
