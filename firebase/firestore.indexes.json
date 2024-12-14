@@ -5,6 +5,34 @@
       "queryScope": "COLLECTION",
       "fields": [
         {
+          "fieldPath": "uid",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "timePosted",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "artistPortfolioPost",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "uid",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "timePosted",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "artistFlashPost",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
           "fieldPath": "postUser",
           "order": "ASCENDING"
         },

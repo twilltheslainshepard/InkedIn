@@ -7,6 +7,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/upload_data.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'business_account_setup_model.dart';
 export 'business_account_setup_model.dart';
 
@@ -53,7 +54,10 @@ class _BusinessAccountSetupWidgetState
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
+      onTap: () {
+        FocusScope.of(context).unfocus();
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -189,10 +193,22 @@ class _BusinessAccountSetupWidgetState
                                       fontFamily: 'Inter',
                                       letterSpacing: 0.0,
                                     ),
+                                maxLength: 50,
+                                maxLengthEnforcement:
+                                    MaxLengthEnforcement.enforced,
+                                buildCounter: (context,
+                                        {required currentLength,
+                                        required isFocused,
+                                        maxLength}) =>
+                                    null,
                                 cursorColor:
                                     FlutterFlowTheme.of(context).primaryText,
                                 validator: _model.textController1Validator
                                     .asValidator(context),
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.allow(
+                                      RegExp('[a-zA-Z0-9]'))
+                                ],
                               ),
                             ),
                           ),
@@ -341,6 +357,15 @@ class _BusinessAccountSetupWidgetState
                                       fontFamily: 'Inter',
                                       letterSpacing: 0.0,
                                     ),
+                                maxLength: 200,
+                                maxLengthEnforcement:
+                                    MaxLengthEnforcement.enforced,
+                                buildCounter: (context,
+                                        {required currentLength,
+                                        required isFocused,
+                                        maxLength}) =>
+                                    null,
+                                keyboardType: TextInputType.streetAddress,
                                 cursorColor:
                                     FlutterFlowTheme.of(context).primaryText,
                                 validator: _model.textController3Validator
@@ -362,6 +387,20 @@ class _BusinessAccountSetupWidgetState
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       children: [
+                        Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 0.0, 10.0),
+                          child: Text(
+                            'This can\'t be changed later on',
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Inter',
+                                  color: FlutterFlowTheme.of(context).error,
+                                  letterSpacing: 0.0,
+                                ),
+                          ),
+                        ),
                         Row(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -420,7 +459,7 @@ class _BusinessAccountSetupWidgetState
                         ),
                         Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
-                              24.0, 30.0, 24.0, 0.0),
+                              24.0, 20.0, 24.0, 20.0),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -549,7 +588,7 @@ class _BusinessAccountSetupWidgetState
                         logFirebaseEvent('Finished Business Onboarding');
                         logFirebaseEvent('CreateAccountButton_navigate_to');
 
-                        context.pushNamed('DummyPage');
+                        context.pushNamed('artistProfile');
                       },
                       text: 'Create Account',
                       options: FFButtonOptions(
@@ -573,7 +612,7 @@ class _BusinessAccountSetupWidgetState
                   ),
                 ],
               ),
-            ].divide(const SizedBox(height: 20.0)),
+            ].divide(const SizedBox(height: 10.0)),
           ),
         ),
       ),

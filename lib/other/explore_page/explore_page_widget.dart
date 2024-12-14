@@ -4,7 +4,6 @@ import '/flutter_flow/flutter_flow_drop_down.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
 import 'package:flutter/material.dart';
 import 'explore_page_model.dart';
@@ -49,7 +48,7 @@ class _ExplorePageWidgetState extends State<ExplorePageWidget> {
         // Customize what your widget looks like when it's loading.
         if (!snapshot.hasData) {
           return Scaffold(
-            backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+            backgroundColor: Colors.white,
             body: Center(
               child: SizedBox(
                 width: 50.0,
@@ -67,10 +66,13 @@ class _ExplorePageWidgetState extends State<ExplorePageWidget> {
             snapshot.data!;
 
         return GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
+          onTap: () {
+            FocusScope.of(context).unfocus();
+            FocusManager.instance.primaryFocus?.unfocus();
+          },
           child: Scaffold(
             key: scaffoldKey,
-            backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+            backgroundColor: Colors.white,
             body: SafeArea(
               top: true,
               child: Column(
@@ -78,8 +80,9 @@ class _ExplorePageWidgetState extends State<ExplorePageWidget> {
                 children: [
                   Container(
                     decoration: BoxDecoration(
+                      color: Colors.white,
                       border: Border.all(
-                        width: 1.5,
+                        color: Colors.black,
                       ),
                     ),
                     child: Column(
@@ -87,50 +90,93 @@ class _ExplorePageWidgetState extends State<ExplorePageWidget> {
                       children: [
                         Row(
                           mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(24.0),
-                                child: Image.asset(
-                                  'assets/images/placeholder_logo.jpg',
-                                  width:
-                                      MediaQuery.sizeOf(context).width * 0.25,
-                                  height:
-                                      MediaQuery.sizeOf(context).height * 0.07,
-                                  fit: BoxFit.fill,
-                                  alignment: const Alignment(0.0, 0.0),
+                              padding: const EdgeInsets.all(15.0),
+                              child: InkWell(
+                                splashColor: Colors.transparent,
+                                focusColor: Colors.transparent,
+                                hoverColor: Colors.transparent,
+                                highlightColor: Colors.transparent,
+                                onTap: () async {
+                                  logFirebaseEvent(
+                                      'EXPLORE_PAGE_PAGE_Logo_ON_TAP');
+                                  if (FFDevEnvironmentValues()
+                                          .loginNavigation ==
+                                      true) {
+                                    if (valueOrDefault(
+                                            currentUserDocument?.accountType,
+                                            '') ==
+                                        'business') {
+                                      logFirebaseEvent('Logo_navigate_to');
+
+                                      context.pushNamed('artistProfile');
+                                    } else {
+                                      logFirebaseEvent('Logo_navigate_to');
+
+                                      context.pushNamed('explorePage');
+                                    }
+
+                                    return;
+                                  } else {
+                                    logFirebaseEvent('Logo_navigate_to');
+
+                                    context.goNamed('DummyPage');
+                                  }
+                                },
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(24.0),
+                                  child: Image.asset(
+                                    'assets/images/placeholder_logo.jpg',
+                                    width: MediaQuery.sizeOf(context).width *
+                                        0.249,
+                                    height: MediaQuery.sizeOf(context).height *
+                                        0.054,
+                                    fit: BoxFit.fill,
+                                    alignment: const Alignment(0.0, 0.0),
+                                  ),
                                 ),
                               ),
                             ),
-                            FFButtonWidget(
-                              onPressed: () async {
-                                logFirebaseEvent(
-                                    'EXPLORE_BACK_TO_DUMMY_BTN_ON_TAP');
-                                logFirebaseEvent('Button_navigate_to');
-
-                                context.pushNamed('DummyPage');
-                              },
-                              text: 'Back to Dummy Page',
-                              options: FFButtonOptions(
-                                height: 40.0,
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    16.0, 0.0, 16.0, 0.0),
-                                iconPadding: const EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 0.0),
-                                color: FlutterFlowTheme.of(context).tertiary,
-                                textStyle: FlutterFlowTheme.of(context)
-                                    .titleSmall
-                                    .override(
-                                      fontFamily: 'Inter Tight',
+                            Flexible(
+                              child: Align(
+                                alignment: const AlignmentDirectional(1.0, 0.0),
+                                child: Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 0.0, 20.0, 0.0),
+                                  child: FlutterFlowIconButton(
+                                    borderRadius: 25.0,
+                                    buttonSize: 40.0,
+                                    fillColor: Colors.black,
+                                    icon: const Icon(
+                                      Icons.person_rounded,
                                       color: Colors.white,
-                                      letterSpacing: 0.0,
+                                      size: 24.0,
                                     ),
-                                elevation: 0.0,
-                                borderRadius: BorderRadius.circular(24.0),
+                                    onPressed: () async {
+                                      logFirebaseEvent(
+                                          'EXPLORE_ProfileIconButton_ON_TAP');
+                                      if (valueOrDefault(
+                                              currentUserDocument?.accountType,
+                                              '') ==
+                                          'business') {
+                                        logFirebaseEvent(
+                                            'ProfileIconButton_navigate_to');
+
+                                        context.pushNamed('artistProfile');
+                                      } else {
+                                        logFirebaseEvent(
+                                            'ProfileIconButton_navigate_to');
+
+                                        context.pushNamed('userProfile');
+                                      }
+                                    },
+                                  ),
+                                ),
                               ),
                             ),
-                          ],
+                          ].divide(const SizedBox(width: 5.0)),
                         ),
                         Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
@@ -142,7 +188,7 @@ class _ExplorePageWidgetState extends State<ExplorePageWidget> {
                                 alignment: const AlignmentDirectional(-1.0, 0.0),
                                 child: Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
-                                      20.0, 0.0, 0.0, 0.0),
+                                      15.0, 0.0, 0.0, 0.0),
                                   child: FlutterFlowDropDown<String>(
                                     controller:
                                         _model.filterDropDownValueController ??=
@@ -155,7 +201,7 @@ class _ExplorePageWidgetState extends State<ExplorePageWidget> {
                                     textStyle: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(
-                                          fontFamily: 'Inter',
+                                          fontFamily: 'Roboto Slab',
                                           letterSpacing: 0.0,
                                         ),
                                     hintText: 'Filter',
@@ -168,8 +214,7 @@ class _ExplorePageWidgetState extends State<ExplorePageWidget> {
                                     fillColor: FlutterFlowTheme.of(context)
                                         .secondaryBackground,
                                     elevation: 2.0,
-                                    borderColor:
-                                        FlutterFlowTheme.of(context).primary,
+                                    borderColor: Colors.black,
                                     borderWidth: 1.5,
                                     borderRadius: 20.0,
                                     margin: const EdgeInsetsDirectional.fromSTEB(
@@ -199,20 +244,19 @@ class _ExplorePageWidgetState extends State<ExplorePageWidget> {
                                         labelStyle: FlutterFlowTheme.of(context)
                                             .labelMedium
                                             .override(
-                                              fontFamily: 'Inter',
+                                              fontFamily: 'Roboto Slab',
                                               letterSpacing: 0.0,
                                             ),
                                         hintText: 'Search',
                                         hintStyle: FlutterFlowTheme.of(context)
                                             .labelMedium
                                             .override(
-                                              fontFamily: 'Inter',
+                                              fontFamily: 'Roboto Slab',
                                               letterSpacing: 0.0,
                                             ),
                                         enabledBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: FlutterFlowTheme.of(context)
-                                                .primary,
+                                          borderSide: const BorderSide(
+                                            color: Colors.black,
                                             width: 1.5,
                                           ),
                                           borderRadius:
@@ -251,7 +295,7 @@ class _ExplorePageWidgetState extends State<ExplorePageWidget> {
                                       style: FlutterFlowTheme.of(context)
                                           .bodyMedium
                                           .override(
-                                            fontFamily: 'Inter',
+                                            fontFamily: 'Roboto Slab',
                                             letterSpacing: 0.0,
                                           ),
                                       cursorColor: FlutterFlowTheme.of(context)
@@ -261,39 +305,6 @@ class _ExplorePageWidgetState extends State<ExplorePageWidget> {
                                           .asValidator(context),
                                     ),
                                   ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 20.0, 0.0),
-                                child: FlutterFlowIconButton(
-                                  borderRadius: 25.0,
-                                  buttonSize: 40.0,
-                                  fillColor:
-                                      FlutterFlowTheme.of(context).primary,
-                                  icon: Icon(
-                                    Icons.person_rounded,
-                                    color: FlutterFlowTheme.of(context).info,
-                                    size: 24.0,
-                                  ),
-                                  onPressed: () async {
-                                    logFirebaseEvent(
-                                        'EXPLORE_ProfileIconButton_ON_TAP');
-                                    if (valueOrDefault(
-                                            currentUserDocument?.accountType,
-                                            '') ==
-                                        'business') {
-                                      logFirebaseEvent(
-                                          'ProfileIconButton_navigate_to');
-
-                                      context.pushNamed('artistProfile');
-                                    } else {
-                                      logFirebaseEvent(
-                                          'ProfileIconButton_navigate_to');
-
-                                      context.pushNamed('userProfile');
-                                    }
-                                  },
                                 ),
                               ),
                             ],
@@ -319,24 +330,52 @@ class _ExplorePageWidgetState extends State<ExplorePageWidget> {
                           itemCount: flashPosts.length,
                           itemBuilder: (context, flashPostsIndex) {
                             final flashPostsItem = flashPosts[flashPostsIndex];
-                            return Container(
-                              width: 100.0,
-                              height: 100.0,
-                              decoration: BoxDecoration(
-                                color: FlutterFlowTheme.of(context)
-                                    .secondaryBackground,
-                                border: Border.all(
-                                  color: Colors.black,
-                                  width: 1.0,
+                            return InkWell(
+                              splashColor: Colors.transparent,
+                              focusColor: Colors.transparent,
+                              hoverColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
+                              onTap: () async {
+                                logFirebaseEvent(
+                                    'EXPLORE_Container_1j57dpl3_ON_TAP');
+                                logFirebaseEvent('Container_navigate_to');
+
+                                context.pushNamed(
+                                  'postPage',
+                                  queryParameters: {
+                                    'postArtist': serializeParam(
+                                      flashPostsIndex,
+                                      ParamType.int,
+                                    ),
+                                  }.withoutNulls,
+                                  extra: <String, dynamic>{
+                                    kTransitionInfoKey: const TransitionInfo(
+                                      hasTransition: true,
+                                      transitionType: PageTransitionType.scale,
+                                      alignment: Alignment.bottomCenter,
+                                      duration: Duration(milliseconds: 300),
+                                    ),
+                                  },
+                                );
+                              },
+                              child: Container(
+                                width: 100.0,
+                                height: 100.0,
+                                decoration: BoxDecoration(
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryBackground,
+                                  border: Border.all(
+                                    color: Colors.black,
+                                  ),
                                 ),
-                              ),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(0.0),
-                                child: Image.network(
-                                  flashPostsItem.flashPhoto,
-                                  width: 200.0,
-                                  height: 200.0,
-                                  fit: BoxFit.cover,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(0.0),
+                                  child: Image.network(
+                                    flashPostsItem.flashPhoto,
+                                    width: 200.0,
+                                    height: 200.0,
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
                               ),
                             );

@@ -1,4 +1,4 @@
-package com.mycompany.inkedin;
+package com.uricsc305.inkedin;
 
 import androidx.test.rule.ActivityTestRule;
 import dev.flutter.plugins.integration_test.FlutterTestRunner;

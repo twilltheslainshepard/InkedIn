@@ -7,6 +7,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/upload_data.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'user_settings_model.dart';
 export 'user_settings_model.dart';
 
@@ -29,8 +30,11 @@ class _UserSettingsWidgetState extends State<UserSettingsWidget> {
 
     logFirebaseEvent('screen_view',
         parameters: {'screen_name': 'userSettings'});
-    _model.textController ??= TextEditingController();
+    _model.textController1 ??= TextEditingController();
     _model.textFieldFocusNode ??= FocusNode();
+
+    _model.addressFieldTextController ??= TextEditingController();
+    _model.addressFieldFocusNode ??= FocusNode();
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
@@ -68,33 +72,57 @@ class _UserSettingsWidgetState extends State<UserSettingsWidget> {
         final userSettingsUsersRecord = snapshot.data!;
 
         return GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
+          onTap: () {
+            FocusScope.of(context).unfocus();
+            FocusManager.instance.primaryFocus?.unfocus();
+          },
           child: Scaffold(
             key: scaffoldKey,
             backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-            appBar: AppBar(
-              backgroundColor: FlutterFlowTheme.of(context).secondary,
-              iconTheme:
-                  IconThemeData(color: FlutterFlowTheme.of(context).primary),
-              automaticallyImplyLeading: true,
-              title: Text(
-                'Settings',
-                style: FlutterFlowTheme.of(context).titleLarge.override(
-                      fontFamily: 'Inter Tight',
-                      color: Colors.white,
-                      fontSize: 26.0,
-                      letterSpacing: 0.0,
-                    ),
-              ),
-              actions: const [],
-              centerTitle: false,
-              elevation: 1.0,
-            ),
             body: SafeArea(
               top: true,
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 children: [
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      FlutterFlowIconButton(
+                        borderRadius: 8.0,
+                        buttonSize: 40.0,
+                        icon: Icon(
+                          Icons.arrow_back,
+                          color: FlutterFlowTheme.of(context).primary,
+                          size: 24.0,
+                        ),
+                        onPressed: () async {
+                          logFirebaseEvent(
+                              'USER_SETTINGS_PAGE_arrow_back_ICN_ON_TAP');
+                          logFirebaseEvent('IconButton_navigate_back');
+                          context.safePop();
+                        },
+                      ),
+                      Padding(
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 12.0, 0.0),
+                        child: Text(
+                          'Settings',
+                          style: FlutterFlowTheme.of(context)
+                              .displayLarge
+                              .override(
+                                fontFamily: 'Inter Tight',
+                                fontSize: 24.0,
+                                letterSpacing: 0.0,
+                              ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Divider(
+                    thickness: 2.0,
+                    color: FlutterFlowTheme.of(context).alternate,
+                  ),
                   Padding(
                     padding: const EdgeInsets.all(24.0),
                     child: Row(
@@ -118,18 +146,16 @@ class _UserSettingsWidgetState extends State<UserSettingsWidget> {
                           ),
                           child: Stack(
                             children: [
-                              AuthUserStreamWidget(
-                                builder: (context) => Container(
-                                  width: 200.0,
-                                  height: 200.0,
-                                  clipBehavior: Clip.antiAlias,
-                                  decoration: const BoxDecoration(
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: Image.network(
-                                    currentUserPhoto,
-                                    fit: BoxFit.cover,
-                                  ),
+                              Container(
+                                width: 200.0,
+                                height: 200.0,
+                                clipBehavior: Clip.antiAlias,
+                                decoration: const BoxDecoration(
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Image.network(
+                                  userSettingsUsersRecord.photoUrl,
+                                  fit: BoxFit.cover,
                                 ),
                               ),
                               Align(
@@ -247,7 +273,7 @@ class _UserSettingsWidgetState extends State<UserSettingsWidget> {
                                 builder: (context) => SizedBox(
                                   width: 200.0,
                                   child: TextFormField(
-                                    controller: _model.textController,
+                                    controller: _model.textController1,
                                     focusNode: _model.textFieldFocusNode,
                                     autofocus: false,
                                     obscureText: false,
@@ -310,10 +336,22 @@ class _UserSettingsWidgetState extends State<UserSettingsWidget> {
                                           fontFamily: 'Inter',
                                           letterSpacing: 0.0,
                                         ),
+                                    maxLength: 50,
+                                    maxLengthEnforcement:
+                                        MaxLengthEnforcement.enforced,
+                                    buildCounter: (context,
+                                            {required currentLength,
+                                            required isFocused,
+                                            maxLength}) =>
+                                        null,
                                     cursorColor: FlutterFlowTheme.of(context)
                                         .primaryText,
-                                    validator: _model.textControllerValidator
+                                    validator: _model.textController1Validator
                                         .asValidator(context),
+                                    inputFormatters: [
+                                      FilteringTextInputFormatter.allow(
+                                          RegExp('[a-zA-Z0-9]'))
+                                    ],
                                   ),
                                 ),
                               ),
@@ -336,7 +374,7 @@ class _UserSettingsWidgetState extends State<UserSettingsWidget> {
 
                                 await currentUserReference!
                                     .update(createUsersRecordData(
-                                  displayName: _model.textController.text,
+                                  displayName: _model.textController1.text,
                                 ));
                               },
                               text: 'Change Username',
@@ -356,6 +394,225 @@ class _UserSettingsWidgetState extends State<UserSettingsWidget> {
                                     ),
                                 elevation: 0.0,
                                 borderRadius: BorderRadius.circular(24.0),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  Divider(
+                    thickness: 2.0,
+                    color: FlutterFlowTheme.of(context).alternate,
+                  ),
+                  Column(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(24.0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Text(
+                              'Address:',
+                              style: FlutterFlowTheme.of(context)
+                                  .titleSmall
+                                  .override(
+                                    fontFamily: 'Inter Tight',
+                                    letterSpacing: 0.0,
+                                  ),
+                            ),
+                            Expanded(
+                              child: AuthUserStreamWidget(
+                                builder: (context) => SizedBox(
+                                  width: 200.0,
+                                  child: TextFormField(
+                                    controller:
+                                        _model.addressFieldTextController,
+                                    focusNode: _model.addressFieldFocusNode,
+                                    autofocus: false,
+                                    textCapitalization:
+                                        TextCapitalization.words,
+                                    obscureText: false,
+                                    decoration: InputDecoration(
+                                      isDense: true,
+                                      labelStyle: FlutterFlowTheme.of(context)
+                                          .labelMedium
+                                          .override(
+                                            fontFamily: 'Inter',
+                                            letterSpacing: 0.0,
+                                          ),
+                                      hintText: valueOrDefault(
+                                          currentUserDocument?.address, ''),
+                                      hintStyle: FlutterFlowTheme.of(context)
+                                          .labelMedium
+                                          .override(
+                                            fontFamily: 'Inter',
+                                            letterSpacing: 0.0,
+                                          ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                          color: Color(0x00000000),
+                                          width: 1.0,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                          color: Color(0x00000000),
+                                          width: 1.0,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                      ),
+                                      errorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: FlutterFlowTheme.of(context)
+                                              .error,
+                                          width: 1.0,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                      ),
+                                      focusedErrorBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(
+                                          color: FlutterFlowTheme.of(context)
+                                              .error,
+                                          width: 1.0,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                      ),
+                                      filled: true,
+                                      fillColor: FlutterFlowTheme.of(context)
+                                          .secondaryBackground,
+                                    ),
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Inter',
+                                          letterSpacing: 0.0,
+                                        ),
+                                    maxLength: 200,
+                                    maxLengthEnforcement:
+                                        MaxLengthEnforcement.enforced,
+                                    buildCounter: (context,
+                                            {required currentLength,
+                                            required isFocused,
+                                            maxLength}) =>
+                                        null,
+                                    keyboardType: TextInputType.streetAddress,
+                                    cursorColor: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                    validator: _model
+                                        .addressFieldTextControllerValidator
+                                        .asValidator(context),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 15.0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            FFButtonWidget(
+                              onPressed: () async {
+                                logFirebaseEvent(
+                                    'USER_SETTINGS_EditTattooAddress_ON_TAP');
+                                logFirebaseEvent(
+                                    'EditTattooAddress_backend_call');
+
+                                await currentUserReference!
+                                    .update(createUsersRecordData(
+                                  address:
+                                      (_model.addressFieldFocusNode?.hasFocus ??
+                                              false)
+                                          .toString(),
+                                ));
+                              },
+                              text: 'Change Address',
+                              options: FFButtonOptions(
+                                height: 40.0,
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    16.0, 0.0, 16.0, 0.0),
+                                iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 0.0),
+                                color: FlutterFlowTheme.of(context).tertiary,
+                                textStyle: FlutterFlowTheme.of(context)
+                                    .titleSmall
+                                    .override(
+                                      fontFamily: 'Inter Tight',
+                                      color: Colors.white,
+                                      letterSpacing: 0.0,
+                                    ),
+                                elevation: 0.0,
+                                borderRadius: BorderRadius.circular(24.0),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  Divider(
+                    thickness: 2.0,
+                    color: FlutterFlowTheme.of(context).alternate,
+                  ),
+                  Column(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 15.0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(24.0),
+                              child: FFButtonWidget(
+                                onPressed: () async {
+                                  logFirebaseEvent(
+                                      'USER_SETTINGS_PAGE_logoutButton_ON_TAP');
+                                  logFirebaseEvent('logoutButton_auth');
+                                  GoRouter.of(context).prepareAuthEvent();
+                                  await authManager.signOut();
+                                  GoRouter.of(context).clearRedirectLocation();
+
+                                  logFirebaseEvent('logoutButton_navigate_to');
+
+                                  context.goNamedAuth(
+                                      'LoginPage', context.mounted);
+                                },
+                                text: 'Log Out',
+                                options: FFButtonOptions(
+                                  height: 40.0,
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      16.0, 0.0, 16.0, 0.0),
+                                  iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 0.0, 0.0, 0.0),
+                                  color: FlutterFlowTheme.of(context).tertiary,
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .titleSmall
+                                      .override(
+                                        fontFamily: 'Inter Tight',
+                                        color: Colors.white,
+                                        letterSpacing: 0.0,
+                                      ),
+                                  elevation: 0.0,
+                                  borderRadius: BorderRadius.circular(24.0),
+                                ),
                               ),
                             ),
                           ],

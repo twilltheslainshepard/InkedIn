@@ -61,7 +61,7 @@ class _PostImageWidgetState extends State<PostImageWidget> {
       width: double.infinity,
       height: double.infinity,
       decoration: const BoxDecoration(
-        color: Color(0xB20B191E),
+        color: Color(0xB2FFFFFF),
       ),
       child: Align(
         alignment: const AlignmentDirectional(0.0, 1.0),
@@ -107,11 +107,12 @@ class _PostImageWidgetState extends State<PostImageWidget> {
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   16.0, 0.0, 0.0, 0.0),
                               child: Text(
-                                'Tattoo Post',
+                                'Create a tattoo post:',
                                 style: FlutterFlowTheme.of(context)
                                     .titleLarge
                                     .override(
-                                      fontFamily: 'Inter Tight',
+                                      fontFamily: 'Roboto Slab',
+                                      color: const Color(0xFF010101),
                                       letterSpacing: 0.0,
                                     ),
                               ),
@@ -143,11 +144,6 @@ class _PostImageWidgetState extends State<PostImageWidget> {
                           ],
                         ),
                       ),
-                      const Divider(
-                        height: 4.0,
-                        thickness: 1.0,
-                        color: Color(0xFFE0E3E7),
-                      ),
                       Container(
                         width: double.infinity,
                         decoration: const BoxDecoration(
@@ -167,36 +163,35 @@ class _PostImageWidgetState extends State<PostImageWidget> {
                                 onChanged: (val) => safeSetState(() =>
                                     _model.choiceChipsValue = val?.firstOrNull),
                                 selectedChipStyle: ChipStyle(
-                                  backgroundColor:
-                                      FlutterFlowTheme.of(context).tertiary,
+                                  backgroundColor: Colors.white,
                                   textStyle: FlutterFlowTheme.of(context)
                                       .bodyMedium
                                       .override(
-                                        fontFamily: 'Inter',
-                                        color:
-                                            FlutterFlowTheme.of(context).info,
+                                        fontFamily: 'Roboto Slab',
+                                        color: Colors.black,
                                         letterSpacing: 0.0,
+                                        fontWeight: FontWeight.bold,
                                       ),
                                   iconColor: FlutterFlowTheme.of(context).info,
                                   iconSize: 16.0,
                                   elevation: 0.0,
+                                  borderColor: Colors.black,
                                   borderRadius: BorderRadius.circular(8.0),
                                 ),
                                 unselectedChipStyle: ChipStyle(
-                                  backgroundColor: FlutterFlowTheme.of(context)
-                                      .secondaryBackground,
+                                  backgroundColor: Colors.white,
                                   textStyle: FlutterFlowTheme.of(context)
                                       .bodyMedium
                                       .override(
-                                        fontFamily: 'Inter',
-                                        color: FlutterFlowTheme.of(context)
-                                            .secondaryText,
+                                        fontFamily: 'Roboto Slab',
+                                        color: const Color(0xFFABABAB),
                                         letterSpacing: 0.0,
+                                        fontWeight: FontWeight.bold,
                                       ),
-                                  iconColor: FlutterFlowTheme.of(context)
-                                      .secondaryText,
+                                  iconColor: const Color(0xFF898989),
                                   iconSize: 16.0,
                                   elevation: 0.0,
+                                  borderColor: Colors.black,
                                   borderRadius: BorderRadius.circular(8.0),
                                 ),
                                 chipSpacing: 8.0,
@@ -276,7 +271,7 @@ class _PostImageWidgetState extends State<PostImageWidget> {
                                 style: FlutterFlowTheme.of(context)
                                     .bodyMedium
                                     .override(
-                                      fontFamily: 'Inter',
+                                      fontFamily: 'Roboto Slab',
                                       letterSpacing: 0.0,
                                     ),
                                 textAlign: TextAlign.center,
@@ -291,108 +286,121 @@ class _PostImageWidgetState extends State<PostImageWidget> {
                                 ],
                               ),
                             ),
-                            Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 10.0, 0.0, 10.0),
-                                  child: FFButtonWidget(
-                                    onPressed: () async {
-                                      logFirebaseEvent(
-                                          'POST_IMAGE_COMP_uploadPhoto_ON_TAP');
-                                      logFirebaseEvent(
-                                          'uploadPhoto_upload_media_to_firebase');
-                                      final selectedMedia =
-                                          await selectMediaWithSourceBottomSheet(
-                                        context: context,
-                                        allowPhoto: true,
-                                      );
-                                      if (selectedMedia != null &&
-                                          selectedMedia.every((m) =>
-                                              validateFileFormat(
-                                                  m.storagePath, context))) {
-                                        safeSetState(() =>
-                                            _model.isDataUploading = true);
-                                        var selectedUploadedFiles =
-                                            <FFUploadedFile>[];
+                            Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 10.0),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 10.0, 0.0, 10.0),
+                                    child: FFButtonWidget(
+                                      onPressed: () async {
+                                        logFirebaseEvent(
+                                            'POST_IMAGE_COMP_uploadPhoto_ON_TAP');
+                                        logFirebaseEvent(
+                                            'uploadPhoto_upload_media_to_firebase');
+                                        final selectedMedia =
+                                            await selectMediaWithSourceBottomSheet(
+                                          context: context,
+                                          allowPhoto: true,
+                                        );
+                                        if (selectedMedia != null &&
+                                            selectedMedia.every((m) =>
+                                                validateFileFormat(
+                                                    m.storagePath, context))) {
+                                          safeSetState(() =>
+                                              _model.isDataUploading = true);
+                                          var selectedUploadedFiles =
+                                              <FFUploadedFile>[];
 
-                                        var downloadUrls = <String>[];
-                                        try {
-                                          selectedUploadedFiles = selectedMedia
-                                              .map((m) => FFUploadedFile(
-                                                    name: m.storagePath
-                                                        .split('/')
-                                                        .last,
-                                                    bytes: m.bytes,
-                                                    height:
-                                                        m.dimensions?.height,
-                                                    width: m.dimensions?.width,
-                                                    blurHash: m.blurHash,
-                                                  ))
-                                              .toList();
+                                          var downloadUrls = <String>[];
+                                          try {
+                                            selectedUploadedFiles =
+                                                selectedMedia
+                                                    .map((m) => FFUploadedFile(
+                                                          name: m.storagePath
+                                                              .split('/')
+                                                              .last,
+                                                          bytes: m.bytes,
+                                                          height: m.dimensions
+                                                              ?.height,
+                                                          width: m.dimensions
+                                                              ?.width,
+                                                          blurHash: m.blurHash,
+                                                        ))
+                                                    .toList();
 
-                                          downloadUrls = (await Future.wait(
-                                            selectedMedia.map(
-                                              (m) async => await uploadData(
-                                                  m.storagePath, m.bytes),
+                                            downloadUrls = (await Future.wait(
+                                              selectedMedia.map(
+                                                (m) async => await uploadData(
+                                                    m.storagePath, m.bytes),
+                                              ),
+                                            ))
+                                                .where((u) => u != null)
+                                                .map((u) => u!)
+                                                .toList();
+                                          } finally {
+                                            _model.isDataUploading = false;
+                                          }
+                                          if (selectedUploadedFiles.length ==
+                                                  selectedMedia.length &&
+                                              downloadUrls.length ==
+                                                  selectedMedia.length) {
+                                            safeSetState(() {
+                                              _model.uploadedLocalFile =
+                                                  selectedUploadedFiles.first;
+                                              _model.uploadedFileUrl =
+                                                  downloadUrls.first;
+                                            });
+                                          } else {
+                                            safeSetState(() {});
+                                            return;
+                                          }
+                                        }
+                                      },
+                                      text: 'Upload Photo',
+                                      options: FFButtonOptions(
+                                        height: 40.0,
+                                        padding: const EdgeInsetsDirectional.fromSTEB(
+                                            16.0, 0.0, 16.0, 0.0),
+                                        iconPadding:
+                                            const EdgeInsetsDirectional.fromSTEB(
+                                                0.0, 0.0, 0.0, 0.0),
+                                        color: Colors.white,
+                                        textStyle: FlutterFlowTheme.of(context)
+                                            .titleSmall
+                                            .override(
+                                              fontFamily: 'Roboto Slab',
+                                              color: Colors.black,
+                                              letterSpacing: 0.0,
                                             ),
-                                          ))
-                                              .where((u) => u != null)
-                                              .map((u) => u!)
-                                              .toList();
-                                        } finally {
-                                          _model.isDataUploading = false;
-                                        }
-                                        if (selectedUploadedFiles.length ==
-                                                selectedMedia.length &&
-                                            downloadUrls.length ==
-                                                selectedMedia.length) {
-                                          safeSetState(() {
-                                            _model.uploadedLocalFile =
-                                                selectedUploadedFiles.first;
-                                            _model.uploadedFileUrl =
-                                                downloadUrls.first;
-                                          });
-                                        } else {
-                                          safeSetState(() {});
-                                          return;
-                                        }
-                                      }
-                                    },
-                                    text: 'Upload Photo',
-                                    options: FFButtonOptions(
-                                      height: 40.0,
-                                      padding: const EdgeInsetsDirectional.fromSTEB(
-                                          16.0, 0.0, 16.0, 0.0),
-                                      iconPadding:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              0.0, 0.0, 0.0, 0.0),
-                                      color:
-                                          FlutterFlowTheme.of(context).tertiary,
-                                      textStyle: FlutterFlowTheme.of(context)
-                                          .titleSmall
-                                          .override(
-                                            fontFamily: 'Inter Tight',
-                                            color: Colors.white,
-                                            letterSpacing: 0.0,
-                                          ),
-                                      elevation: 0.0,
-                                      borderRadius: BorderRadius.circular(24.0),
+                                        elevation: 0.0,
+                                        borderSide: const BorderSide(
+                                          color: Colors.black,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(24.0),
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                             if (_model.uploadedFileUrl != '')
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(8.0),
-                                child: Image.network(
-                                  _model.uploadedFileUrl,
-                                  width: 300.0,
-                                  height: 300.0,
-                                  fit: BoxFit.cover,
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 10.0),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                  child: Image.network(
+                                    _model.uploadedFileUrl,
+                                    width: 300.0,
+                                    height: 300.0,
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
                               ),
                             Padding(
@@ -459,7 +467,7 @@ class _PostImageWidgetState extends State<PostImageWidget> {
                                 style: FlutterFlowTheme.of(context)
                                     .bodyMedium
                                     .override(
-                                      fontFamily: 'Inter',
+                                      fontFamily: 'Roboto Slab',
                                       letterSpacing: 0.0,
                                     ),
                                 maxLines: 7,
@@ -472,17 +480,13 @@ class _PostImageWidgetState extends State<PostImageWidget> {
                           ],
                         ),
                       ),
-                      const Divider(
-                        height: 4.0,
-                        thickness: 1.0,
-                        color: Color(0xFFE0E3E7),
-                      ),
                       Padding(
                         padding: const EdgeInsetsDirectional.fromSTEB(
                             8.0, 4.0, 16.0, 44.0),
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Container(
                               width: 80.0,
@@ -507,7 +511,6 @@ class _PostImageWidgetState extends State<PostImageWidget> {
                                       await ArtistFlashPostRecord.collection
                                           .doc()
                                           .set(createArtistFlashPostRecordData(
-                                            flashPhoto: _model.uploadedFileUrl,
                                             postTitle: _model
                                                 .titleBoxTextController.text,
                                             postDescription: _model
@@ -515,6 +518,12 @@ class _PostImageWidgetState extends State<PostImageWidget> {
                                                 .text,
                                             timePosted: getCurrentTimestamp,
                                             postUser: currentUserReference,
+                                            postArtistName: valueOrDefault(
+                                                currentUserDocument
+                                                    ?.tattooShopName,
+                                                ''),
+                                            flashPhoto: _model.uploadedFileUrl,
+                                            uid: currentUserUid,
                                           ));
                                     } else {
                                       logFirebaseEvent('Row_backend_call');
@@ -532,6 +541,7 @@ class _PostImageWidgetState extends State<PostImageWidget> {
                                             postUser: currentUserReference,
                                             portfolioPhoto:
                                                 _model.uploadedFileUrl,
+                                            uid: currentUserUid,
                                           ));
                                     }
 
@@ -551,20 +561,17 @@ class _PostImageWidgetState extends State<PostImageWidget> {
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium
                                               .override(
-                                                fontFamily: 'Plus Jakarta Sans',
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .tertiary,
-                                                fontSize: 14.0,
+                                                fontFamily: 'Roboto Slab',
+                                                color: Colors.black,
+                                                fontSize: 25.0,
                                                 letterSpacing: 0.0,
                                                 fontWeight: FontWeight.w500,
                                               ),
                                         ),
                                       ),
-                                      Icon(
+                                      const Icon(
                                         Icons.send_rounded,
-                                        color: FlutterFlowTheme.of(context)
-                                            .tertiary,
+                                        color: Colors.black,
                                         size: 28.0,
                                       ),
                                     ].divide(const SizedBox(width: 0.0)),

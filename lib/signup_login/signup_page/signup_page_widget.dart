@@ -47,7 +47,10 @@ class _SignupPageWidgetState extends State<SignupPageWidget> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
+      onTap: () {
+        FocusScope.of(context).unfocus();
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: Colors.white,
@@ -141,6 +144,7 @@ class _SignupPageWidgetState extends State<SignupPageWidget> {
                               fontFamily: 'Inter',
                               letterSpacing: 0.0,
                             ),
+                        keyboardType: TextInputType.emailAddress,
                         cursorColor: FlutterFlowTheme.of(context).primaryText,
                         validator: _model.signupEmailTextControllerValidator
                             .asValidator(context),
@@ -219,6 +223,7 @@ class _SignupPageWidgetState extends State<SignupPageWidget> {
                               fontFamily: 'Inter',
                               letterSpacing: 0.0,
                             ),
+                        keyboardType: TextInputType.visiblePassword,
                         cursorColor: FlutterFlowTheme.of(context).primaryText,
                         validator: _model.signupPasswordTextControllerValidator
                             .asValidator(context),
@@ -297,6 +302,7 @@ class _SignupPageWidgetState extends State<SignupPageWidget> {
                               fontFamily: 'Inter',
                               letterSpacing: 0.0,
                             ),
+                        keyboardType: TextInputType.visiblePassword,
                         cursorColor: FlutterFlowTheme.of(context).primaryText,
                         validator: _model.confirmPasswordTextControllerValidator
                             .asValidator(context),

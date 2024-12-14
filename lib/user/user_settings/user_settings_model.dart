@@ -12,8 +12,12 @@ class UserSettingsModel extends FlutterFlowModel<UserSettingsWidget> {
 
   // State field(s) for TextField widget.
   FocusNode? textFieldFocusNode;
-  TextEditingController? textController;
-  String? Function(BuildContext, String?)? textControllerValidator;
+  TextEditingController? textController1;
+  String? Function(BuildContext, String?)? textController1Validator;
+  // State field(s) for AddressField widget.
+  FocusNode? addressFieldFocusNode;
+  TextEditingController? addressFieldTextController;
+  String? Function(BuildContext, String?)? addressFieldTextControllerValidator;
 
   @override
   void initState(BuildContext context) {}
@@ -21,6 +25,9 @@ class UserSettingsModel extends FlutterFlowModel<UserSettingsWidget> {
   @override
   void dispose() {
     textFieldFocusNode?.dispose();
-    textController?.dispose();
+    textController1?.dispose();
+
+    addressFieldFocusNode?.dispose();
+    addressFieldTextController?.dispose();
   }
 }

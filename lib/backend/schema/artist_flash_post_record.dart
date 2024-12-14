@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:collection/collection.dart';
 
 import '/backend/schema/util/firestore_util.dart';
+import '/backend/schema/util/schema_util.dart';
 
 import 'index.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -14,11 +15,6 @@ class ArtistFlashPostRecord extends FirestoreRecord {
   ) {
     _initializeFields();
   }
-
-  // "flashPhoto" field.
-  String? _flashPhoto;
-  String get flashPhoto => _flashPhoto ?? '';
-  bool hasFlashPhoto() => _flashPhoto != null;
 
   // "postTitle" field.
   String? _postTitle;
@@ -40,12 +36,35 @@ class ArtistFlashPostRecord extends FirestoreRecord {
   DocumentReference? get postUser => _postUser;
   bool hasPostUser() => _postUser != null;
 
+  // "postArtistName" field.
+  String? _postArtistName;
+  String get postArtistName => _postArtistName ?? '';
+  bool hasPostArtistName() => _postArtistName != null;
+
+  // "flashPhoto" field.
+  String? _flashPhoto;
+  String get flashPhoto => _flashPhoto ?? '';
+  bool hasFlashPhoto() => _flashPhoto != null;
+
+  // "uid" field.
+  String? _uid;
+  String get uid => _uid ?? '';
+  bool hasUid() => _uid != null;
+
+  // "savedBy" field.
+  List<String>? _savedBy;
+  List<String> get savedBy => _savedBy ?? const [];
+  bool hasSavedBy() => _savedBy != null;
+
   void _initializeFields() {
-    _flashPhoto = snapshotData['flashPhoto'] as String?;
     _postTitle = snapshotData['postTitle'] as String?;
     _postDescription = snapshotData['postDescription'] as String?;
     _timePosted = snapshotData['timePosted'] as DateTime?;
     _postUser = snapshotData['postUser'] as DocumentReference?;
+    _postArtistName = snapshotData['postArtistName'] as String?;
+    _flashPhoto = snapshotData['flashPhoto'] as String?;
+    _uid = snapshotData['uid'] as String?;
+    _savedBy = getDataList(snapshotData['savedBy']);
   }
 
   static CollectionReference get collection =>
@@ -83,19 +102,23 @@ class ArtistFlashPostRecord extends FirestoreRecord {
 }
 
 Map<String, dynamic> createArtistFlashPostRecordData({
-  String? flashPhoto,
   String? postTitle,
   String? postDescription,
   DateTime? timePosted,
   DocumentReference? postUser,
+  String? postArtistName,
+  String? flashPhoto,
+  String? uid,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
-      'flashPhoto': flashPhoto,
       'postTitle': postTitle,
       'postDescription': postDescription,
       'timePosted': timePosted,
       'postUser': postUser,
+      'postArtistName': postArtistName,
+      'flashPhoto': flashPhoto,
+      'uid': uid,
     }.withoutNulls,
   );
 
@@ -108,20 +131,27 @@ class ArtistFlashPostRecordDocumentEquality
 
   @override
   bool equals(ArtistFlashPostRecord? e1, ArtistFlashPostRecord? e2) {
-    return e1?.flashPhoto == e2?.flashPhoto &&
-        e1?.postTitle == e2?.postTitle &&
+    const listEquality = ListEquality();
+    return e1?.postTitle == e2?.postTitle &&
         e1?.postDescription == e2?.postDescription &&
         e1?.timePosted == e2?.timePosted &&
-        e1?.postUser == e2?.postUser;
+        e1?.postUser == e2?.postUser &&
+        e1?.postArtistName == e2?.postArtistName &&
+        e1?.flashPhoto == e2?.flashPhoto &&
+        e1?.uid == e2?.uid &&
+        listEquality.equals(e1?.savedBy, e2?.savedBy);
   }
 
   @override
   int hash(ArtistFlashPostRecord? e) => const ListEquality().hash([
-        e?.flashPhoto,
         e?.postTitle,
         e?.postDescription,
         e?.timePosted,
-        e?.postUser
+        e?.postUser,
+        e?.postArtistName,
+        e?.flashPhoto,
+        e?.uid,
+        e?.savedBy
       ]);
 
   @override

@@ -4,6 +4,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'user_account_setup_model.dart';
 export 'user_account_setup_model.dart';
 
@@ -45,7 +46,10 @@ class _UserAccountSetupWidgetState extends State<UserAccountSetupWidget> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
+      onTap: () {
+        FocusScope.of(context).unfocus();
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -181,10 +185,22 @@ class _UserAccountSetupWidgetState extends State<UserAccountSetupWidget> {
                                       fontFamily: 'Inter',
                                       letterSpacing: 0.0,
                                     ),
+                                maxLength: 50,
+                                maxLengthEnforcement:
+                                    MaxLengthEnforcement.enforced,
+                                buildCounter: (context,
+                                        {required currentLength,
+                                        required isFocused,
+                                        maxLength}) =>
+                                    null,
                                 cursorColor:
                                     FlutterFlowTheme.of(context).primaryText,
                                 validator: _model.textController1Validator
                                     .asValidator(context),
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.allow(
+                                      RegExp('[a-zA-Z0-9]'))
+                                ],
                               ),
                             ),
                           ),
@@ -278,6 +294,20 @@ class _UserAccountSetupWidgetState extends State<UserAccountSetupWidget> {
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       children: [
+                        Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 0.0, 10.0),
+                          child: Text(
+                            'This can\'t be changed later on',
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Inter',
+                                  color: FlutterFlowTheme.of(context).error,
+                                  letterSpacing: 0.0,
+                                ),
+                          ),
+                        ),
                         Row(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -360,7 +390,7 @@ class _UserAccountSetupWidgetState extends State<UserAccountSetupWidget> {
                       logFirebaseEvent('Finished User Onboarding');
                       logFirebaseEvent('CreateAccountButton_navigate_to');
 
-                      context.pushNamed('DummyPage');
+                      context.pushNamed('explorePage');
                     },
                     text: 'Create Account',
                     options: FFButtonOptions(

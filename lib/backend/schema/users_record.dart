@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:collection/collection.dart';
 
 import '/backend/schema/util/firestore_util.dart';
+import '/backend/schema/util/schema_util.dart';
 
 import 'index.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -30,6 +31,11 @@ class UsersRecord extends FirestoreRecord {
   String get photoUrl => _photoUrl ?? '';
   bool hasPhotoUrl() => _photoUrl != null;
 
+  // "uid" field.
+  String? _uid;
+  String get uid => _uid ?? '';
+  bool hasUid() => _uid != null;
+
   // "created_time" field.
   DateTime? _createdTime;
   DateTime? get createdTime => _createdTime;
@@ -44,11 +50,6 @@ class UsersRecord extends FirestoreRecord {
   DateTime? _birthday;
   DateTime? get birthday => _birthday;
   bool hasBirthday() => _birthday != null;
-
-  // "uid" field.
-  String? _uid;
-  String get uid => _uid ?? '';
-  bool hasUid() => _uid != null;
 
   // "address" field.
   String? _address;
@@ -75,19 +76,43 @@ class UsersRecord extends FirestoreRecord {
   String get accountType => _accountType ?? '';
   bool hasAccountType() => _accountType != null;
 
+  // "city" field.
+  String? _city;
+  String get city => _city ?? '';
+  bool hasCity() => _city != null;
+
+  // "state" field.
+  String? _state;
+  String get state => _state ?? '';
+  bool hasState() => _state != null;
+
+  // "saved_posts" field.
+  List<DocumentReference>? _savedPosts;
+  List<DocumentReference> get savedPosts => _savedPosts ?? const [];
+  bool hasSavedPosts() => _savedPosts != null;
+
+  // "appointment" field.
+  String? _appointment;
+  String get appointment => _appointment ?? '';
+  bool hasAppointment() => _appointment != null;
+
   void _initializeFields() {
     _email = snapshotData['email'] as String?;
     _displayName = snapshotData['display_name'] as String?;
     _photoUrl = snapshotData['photo_url'] as String?;
+    _uid = snapshotData['uid'] as String?;
     _createdTime = snapshotData['created_time'] as DateTime?;
     _phoneNumber = snapshotData['phone_number'] as String?;
     _birthday = snapshotData['birthday'] as DateTime?;
-    _uid = snapshotData['uid'] as String?;
     _address = snapshotData['address'] as String?;
     _tattooShopName = snapshotData['tattoo_shop_name'] as String?;
     _tattooShopLicense = snapshotData['tattoo_shop_license'] as String?;
     _tattooShopAddress = snapshotData['tattoo_shop_address'] as String?;
     _accountType = snapshotData['account_type'] as String?;
+    _city = snapshotData['city'] as String?;
+    _state = snapshotData['state'] as String?;
+    _savedPosts = getDataList(snapshotData['saved_posts']);
+    _appointment = snapshotData['appointment'] as String?;
   }
 
   static CollectionReference get collection =>
@@ -127,30 +152,36 @@ Map<String, dynamic> createUsersRecordData({
   String? email,
   String? displayName,
   String? photoUrl,
+  String? uid,
   DateTime? createdTime,
   String? phoneNumber,
   DateTime? birthday,
-  String? uid,
   String? address,
   String? tattooShopName,
   String? tattooShopLicense,
   String? tattooShopAddress,
   String? accountType,
+  String? city,
+  String? state,
+  String? appointment,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
       'email': email,
       'display_name': displayName,
       'photo_url': photoUrl,
+      'uid': uid,
       'created_time': createdTime,
       'phone_number': phoneNumber,
       'birthday': birthday,
-      'uid': uid,
       'address': address,
       'tattoo_shop_name': tattooShopName,
       'tattoo_shop_license': tattooShopLicense,
       'tattoo_shop_address': tattooShopAddress,
       'account_type': accountType,
+      'city': city,
+      'state': state,
+      'appointment': appointment,
     }.withoutNulls,
   );
 
@@ -162,18 +193,23 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
 
   @override
   bool equals(UsersRecord? e1, UsersRecord? e2) {
+    const listEquality = ListEquality();
     return e1?.email == e2?.email &&
         e1?.displayName == e2?.displayName &&
         e1?.photoUrl == e2?.photoUrl &&
+        e1?.uid == e2?.uid &&
         e1?.createdTime == e2?.createdTime &&
         e1?.phoneNumber == e2?.phoneNumber &&
         e1?.birthday == e2?.birthday &&
-        e1?.uid == e2?.uid &&
         e1?.address == e2?.address &&
         e1?.tattooShopName == e2?.tattooShopName &&
         e1?.tattooShopLicense == e2?.tattooShopLicense &&
         e1?.tattooShopAddress == e2?.tattooShopAddress &&
-        e1?.accountType == e2?.accountType;
+        e1?.accountType == e2?.accountType &&
+        e1?.city == e2?.city &&
+        e1?.state == e2?.state &&
+        listEquality.equals(e1?.savedPosts, e2?.savedPosts) &&
+        e1?.appointment == e2?.appointment;
   }
 
   @override
@@ -181,15 +217,19 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e?.email,
         e?.displayName,
         e?.photoUrl,
+        e?.uid,
         e?.createdTime,
         e?.phoneNumber,
         e?.birthday,
-        e?.uid,
         e?.address,
         e?.tattooShopName,
         e?.tattooShopLicense,
         e?.tattooShopAddress,
-        e?.accountType
+        e?.accountType,
+        e?.city,
+        e?.state,
+        e?.savedPosts,
+        e?.appointment
       ]);
 
   @override

@@ -1,6 +1,7 @@
 import '/artist/post_image/post_image_widget.dart';
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
+import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -51,7 +52,7 @@ class _ArtistProfileWidgetState extends State<ArtistProfileWidget>
         // Customize what your widget looks like when it's loading.
         if (!snapshot.hasData) {
           return Scaffold(
-            backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+            backgroundColor: Colors.black,
             body: Center(
               child: SizedBox(
                 width: 50.0,
@@ -69,19 +70,13 @@ class _ArtistProfileWidgetState extends State<ArtistProfileWidget>
         final artistProfileUsersRecord = snapshot.data!;
 
         return GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
+          onTap: () {
+            FocusScope.of(context).unfocus();
+            FocusManager.instance.primaryFocus?.unfocus();
+          },
           child: Scaffold(
             key: scaffoldKey,
-            backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-            appBar: AppBar(
-              backgroundColor: FlutterFlowTheme.of(context).secondary,
-              iconTheme:
-                  IconThemeData(color: FlutterFlowTheme.of(context).primary),
-              automaticallyImplyLeading: true,
-              actions: const [],
-              centerTitle: true,
-              elevation: 0.0,
-            ),
+            backgroundColor: Colors.black,
             body: SafeArea(
               top: true,
               child: Align(
@@ -97,9 +92,8 @@ class _ArtistProfileWidgetState extends State<ArtistProfileWidget>
                           constraints: const BoxConstraints(
                             maxWidth: 870.0,
                           ),
-                          decoration: BoxDecoration(
-                            color: FlutterFlowTheme.of(context)
-                                .secondaryBackground,
+                          decoration: const BoxDecoration(
+                            color: Colors.white,
                             shape: BoxShape.rectangle,
                           ),
                           child: Column(
@@ -107,6 +101,58 @@ class _ArtistProfileWidgetState extends State<ArtistProfileWidget>
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 20.0),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    FlutterFlowIconButton(
+                                      borderColor: Colors.transparent,
+                                      borderRadius: 8.0,
+                                      buttonSize: 50.0,
+                                      fillColor: Colors.white,
+                                      icon: const Icon(
+                                        Icons.arrow_back,
+                                        color: Colors.black,
+                                        size: 24.0,
+                                      ),
+                                      onPressed: () async {
+                                        logFirebaseEvent(
+                                            'ARTIST_PROFILE_arrow_back_ICN_ON_TAP');
+                                        logFirebaseEvent(
+                                            'IconButton_navigate_back');
+                                        context.safePop();
+                                      },
+                                    ),
+                                    Align(
+                                      alignment: const AlignmentDirectional(0.0, 0.0),
+                                      child: FlutterFlowIconButton(
+                                        borderColor: const Color(0x00FFFFFF),
+                                        borderRadius: 8.0,
+                                        buttonSize: 50.0,
+                                        fillColor: const Color(0x00FFFFFF),
+                                        icon: Icon(
+                                          Icons.settings_sharp,
+                                          color: FlutterFlowTheme.of(context)
+                                              .primary,
+                                          size: 24.0,
+                                        ),
+                                        onPressed: () async {
+                                          logFirebaseEvent(
+                                              'ARTIST_PROFILE_settings_sharp_ICN_ON_TAP');
+                                          logFirebaseEvent(
+                                              'IconButton_navigate_to');
+
+                                          context.pushNamed('artistSettings');
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     16.0, 12.0, 16.0, 0.0),
@@ -228,9 +274,13 @@ class _ArtistProfileWidgetState extends State<ArtistProfileWidget>
                                             context: context,
                                             builder: (context) {
                                               return GestureDetector(
-                                                onTap: () =>
-                                                    FocusScope.of(context)
-                                                        .unfocus(),
+                                                onTap: () {
+                                                  FocusScope.of(context)
+                                                      .unfocus();
+                                                  FocusManager
+                                                      .instance.primaryFocus
+                                                      ?.unfocus();
+                                                },
                                                 child: Padding(
                                                   padding:
                                                       MediaQuery.viewInsetsOf(
@@ -256,14 +306,16 @@ class _ArtistProfileWidgetState extends State<ArtistProfileWidget>
                                                   0.0, 0.0, 0.0, 0.0),
                                           color: FlutterFlowTheme.of(context)
                                               .tertiary,
-                                          textStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .titleSmall
-                                                  .override(
-                                                    fontFamily: 'Inter Tight',
-                                                    color: Colors.white,
-                                                    letterSpacing: 0.0,
-                                                  ),
+                                          textStyle: FlutterFlowTheme.of(
+                                                  context)
+                                              .titleSmall
+                                              .override(
+                                                fontFamily: 'Inter Tight',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondary,
+                                                letterSpacing: 0.0,
+                                              ),
                                           elevation: 0.0,
                                           borderRadius:
                                               BorderRadius.circular(24.0),
@@ -279,11 +331,8 @@ class _ArtistProfileWidgetState extends State<ArtistProfileWidget>
                                     Align(
                                       alignment: const Alignment(0.0, 0),
                                       child: TabBar(
-                                        labelColor: FlutterFlowTheme.of(context)
-                                            .primaryText,
-                                        unselectedLabelColor:
-                                            FlutterFlowTheme.of(context)
-                                                .secondaryText,
+                                        labelColor: Colors.black,
+                                        unselectedLabelColor: const Color(0xFF969696),
                                         labelStyle: FlutterFlowTheme.of(context)
                                             .titleMedium
                                             .override(
@@ -294,7 +343,7 @@ class _ArtistProfileWidgetState extends State<ArtistProfileWidget>
                                             FlutterFlowTheme.of(context)
                                                 .titleMedium
                                                 .override(
-                                                  fontFamily: 'Inter Tight',
+                                                  fontFamily: 'Roboto Slab',
                                                   letterSpacing: 0.0,
                                                 ),
                                         indicatorColor:
@@ -415,40 +464,79 @@ class _ArtistProfileWidgetState extends State<ArtistProfileWidget>
                                                             final containerUsersRecord =
                                                                 snapshot.data!;
 
-                                                            return Container(
-                                                              width: 100.0,
-                                                              height: 100.0,
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .secondaryBackground,
-                                                                border:
-                                                                    Border.all(
-                                                                  color: Colors
-                                                                      .black,
+                                                            return InkWell(
+                                                              splashColor: Colors
+                                                                  .transparent,
+                                                              focusColor: Colors
+                                                                  .transparent,
+                                                              hoverColor: Colors
+                                                                  .transparent,
+                                                              highlightColor:
+                                                                  Colors
+                                                                      .transparent,
+                                                              onTap: () async {
+                                                                logFirebaseEvent(
+                                                                    'ARTIST_PROFILE_Container_x0bjkm11_ON_TAP');
+                                                                logFirebaseEvent(
+                                                                    'Container_navigate_to');
+
+                                                                context
+                                                                    .pushNamed(
+                                                                  'artistFlashPostPage',
+                                                                  queryParameters:
+                                                                      {
+                                                                    'flashPostArtistID':
+                                                                        serializeParam(
+                                                                      containerUsersRecord
+                                                                          .uid,
+                                                                      ParamType
+                                                                          .String,
+                                                                    ),
+                                                                    'timePosted':
+                                                                        serializeParam(
+                                                                      gridViewArtistFlashPostRecord
+                                                                          .timePosted,
+                                                                      ParamType
+                                                                          .DateTime,
+                                                                    ),
+                                                                  }.withoutNulls,
+                                                                );
+                                                              },
+                                                              child: Container(
+                                                                width: 100.0,
+                                                                height: 100.0,
+                                                                decoration:
+                                                                    BoxDecoration(
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .secondaryBackground,
+                                                                  border: Border
+                                                                      .all(
+                                                                    color: Colors
+                                                                        .black,
+                                                                  ),
                                                                 ),
-                                                              ),
-                                                              child: Visibility(
-                                                                visible: gridViewArtistFlashPostRecord
-                                                                            .flashPhoto !=
-                                                                        '',
                                                                 child:
-                                                                    ClipRRect(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              0.0),
-                                                                  child: Image
-                                                                      .network(
-                                                                    gridViewArtistFlashPostRecord
-                                                                        .flashPhoto,
-                                                                    width:
-                                                                        200.0,
-                                                                    height:
-                                                                        200.0,
-                                                                    fit: BoxFit
-                                                                        .cover,
+                                                                    Visibility(
+                                                                  visible: gridViewArtistFlashPostRecord
+                                                                              .flashPhoto !=
+                                                                          '',
+                                                                  child:
+                                                                      ClipRRect(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            0.0),
+                                                                    child: Image
+                                                                        .network(
+                                                                      gridViewArtistFlashPostRecord
+                                                                          .flashPhoto,
+                                                                      width:
+                                                                          200.0,
+                                                                      height:
+                                                                          200.0,
+                                                                      fit: BoxFit
+                                                                          .cover,
+                                                                    ),
                                                                   ),
                                                                 ),
                                                               ),
@@ -559,40 +647,78 @@ class _ArtistProfileWidgetState extends State<ArtistProfileWidget>
                                                             final containerUsersRecord =
                                                                 snapshot.data!;
 
-                                                            return Container(
-                                                              width: 100.0,
-                                                              height: 100.0,
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .secondaryBackground,
-                                                                border:
-                                                                    Border.all(
-                                                                  color: Colors
-                                                                      .black,
+                                                            return InkWell(
+                                                              splashColor: Colors
+                                                                  .transparent,
+                                                              focusColor: Colors
+                                                                  .transparent,
+                                                              hoverColor: Colors
+                                                                  .transparent,
+                                                              highlightColor:
+                                                                  Colors
+                                                                      .transparent,
+                                                              onTap: () async {
+                                                                logFirebaseEvent(
+                                                                    'ARTIST_PROFILE_Container_w8441qtw_ON_TAP');
+                                                                logFirebaseEvent(
+                                                                    'Container_navigate_to');
+
+                                                                context
+                                                                    .pushNamed(
+                                                                  'artistPortfolioPostPage',
+                                                                  queryParameters:
+                                                                      {
+                                                                    'portfolioPostArtistID':
+                                                                        serializeParam(
+                                                                      currentUserUid,
+                                                                      ParamType
+                                                                          .String,
+                                                                    ),
+                                                                    'timePosted':
+                                                                        serializeParam(
+                                                                      gridViewArtistPortfolioPostRecord
+                                                                          .timePosted,
+                                                                      ParamType
+                                                                          .DateTime,
+                                                                    ),
+                                                                  }.withoutNulls,
+                                                                );
+                                                              },
+                                                              child: Container(
+                                                                width: 100.0,
+                                                                height: 100.0,
+                                                                decoration:
+                                                                    BoxDecoration(
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .secondaryBackground,
+                                                                  border: Border
+                                                                      .all(
+                                                                    color: Colors
+                                                                        .black,
+                                                                  ),
                                                                 ),
-                                                              ),
-                                                              child: Visibility(
-                                                                visible: gridViewArtistPortfolioPostRecord
-                                                                            .portfolioPhoto !=
-                                                                        '',
                                                                 child:
-                                                                    ClipRRect(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              0.0),
-                                                                  child: Image
-                                                                      .network(
-                                                                    gridViewArtistPortfolioPostRecord
-                                                                        .portfolioPhoto,
-                                                                    width:
-                                                                        200.0,
-                                                                    height:
-                                                                        200.0,
-                                                                    fit: BoxFit
-                                                                        .cover,
+                                                                    Visibility(
+                                                                  visible: gridViewArtistPortfolioPostRecord
+                                                                              .portfolioPhoto !=
+                                                                          '',
+                                                                  child:
+                                                                      ClipRRect(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            0.0),
+                                                                    child: Image
+                                                                        .network(
+                                                                      gridViewArtistPortfolioPostRecord
+                                                                          .portfolioPhoto,
+                                                                      width:
+                                                                          200.0,
+                                                                      height:
+                                                                          200.0,
+                                                                      fit: BoxFit
+                                                                          .cover,
+                                                                    ),
                                                                   ),
                                                                 ),
                                                               ),

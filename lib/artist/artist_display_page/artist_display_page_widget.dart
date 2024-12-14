@@ -1,14 +1,24 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
+import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'artist_display_page_model.dart';
 export 'artist_display_page_model.dart';
 
 class ArtistDisplayPageWidget extends StatefulWidget {
-  const ArtistDisplayPageWidget({super.key});
+  const ArtistDisplayPageWidget({
+    super.key,
+    String? artistUID,
+    this.userEmail,
+  }) : artistUID = artistUID ?? '0';
+
+  final String artistUID;
+  final String? userEmail;
 
   @override
   State<ArtistDisplayPageWidget> createState() =>
@@ -28,6 +38,19 @@ class _ArtistDisplayPageWidgetState extends State<ArtistDisplayPageWidget>
 
     logFirebaseEvent('screen_view',
         parameters: {'screen_name': 'artistDisplayPage'});
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      logFirebaseEvent('ARTIST_DISPLAY_artistDisplayPage_ON_INIT');
+      logFirebaseEvent('artistDisplayPage_firestore_query');
+      await queryUsersRecordOnce(
+        queryBuilder: (usersRecord) => usersRecord.where(
+          'email',
+          isEqualTo: '',
+        ),
+        singleRecord: true,
+      ).then((s) => s.firstOrNull);
+    });
+
     _model.tabBarController = TabController(
       vsync: this,
       length: 2,
@@ -45,8 +68,14 @@ class _ArtistDisplayPageWidgetState extends State<ArtistDisplayPageWidget>
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<UsersRecord>(
-      stream: UsersRecord.getDocument(currentUserReference!),
+    return StreamBuilder<List<UsersRecord>>(
+      stream: queryUsersRecord(
+        queryBuilder: (usersRecord) => usersRecord.where(
+          'uid',
+          isEqualTo: widget.artistUID,
+        ),
+        singleRecord: true,
+      ),
       builder: (context, snapshot) {
         // Customize what your widget looks like when it's loading.
         if (!snapshot.hasData) {
@@ -65,23 +94,24 @@ class _ArtistDisplayPageWidgetState extends State<ArtistDisplayPageWidget>
             ),
           );
         }
-
-        final artistDisplayPageUsersRecord = snapshot.data!;
+        List<UsersRecord> artistDisplayPageUsersRecordList = snapshot.data!;
+        // Return an empty Container when the item does not exist.
+        if (snapshot.data!.isEmpty) {
+          return Container();
+        }
+        final artistDisplayPageUsersRecord =
+            artistDisplayPageUsersRecordList.isNotEmpty
+                ? artistDisplayPageUsersRecordList.first
+                : null;
 
         return GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
+          onTap: () {
+            FocusScope.of(context).unfocus();
+            FocusManager.instance.primaryFocus?.unfocus();
+          },
           child: Scaffold(
             key: scaffoldKey,
             backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-            appBar: AppBar(
-              backgroundColor: FlutterFlowTheme.of(context).secondary,
-              iconTheme:
-                  IconThemeData(color: FlutterFlowTheme.of(context).primary),
-              automaticallyImplyLeading: true,
-              actions: const [],
-              centerTitle: true,
-              elevation: 0.0,
-            ),
             body: SafeArea(
               top: true,
               child: Align(
@@ -107,6 +137,35 @@ class _ArtistDisplayPageWidgetState extends State<ArtistDisplayPageWidget>
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 20.0),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    FlutterFlowIconButton(
+                                      borderColor: Colors.transparent,
+                                      borderRadius: 8.0,
+                                      buttonSize: 40.0,
+                                      icon: Icon(
+                                        Icons.arrow_back,
+                                        color: FlutterFlowTheme.of(context)
+                                            .primary,
+                                        size: 24.0,
+                                      ),
+                                      onPressed: () async {
+                                        logFirebaseEvent(
+                                            'ARTIST_DISPLAY_arrow_back_ICN_ON_TAP');
+                                        logFirebaseEvent(
+                                            'IconButton_navigate_back');
+                                        context.safePop();
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ),
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     16.0, 12.0, 16.0, 0.0),
@@ -135,7 +194,7 @@ class _ArtistDisplayPageWidgetState extends State<ArtistDisplayPageWidget>
                                           borderRadius:
                                               BorderRadius.circular(8.0),
                                           child: Image.network(
-                                            artistDisplayPageUsersRecord
+                                            artistDisplayPageUsersRecord!
                                                 .photoUrl,
                                             width: 300.0,
                                             height: 200.0,
@@ -155,7 +214,7 @@ class _ArtistDisplayPageWidgetState extends State<ArtistDisplayPageWidget>
                                           valueOrDefault<String>(
                                             artistDisplayPageUsersRecord
                                                 .displayName,
-                                            'userName',
+                                            'artist',
                                           ),
                                           style: FlutterFlowTheme.of(context)
                                               .headlineMedium
@@ -217,9 +276,26 @@ class _ArtistDisplayPageWidgetState extends State<ArtistDisplayPageWidget>
                                       padding: const EdgeInsetsDirectional.fromSTEB(
                                           16.0, 12.0, 16.0, 12.0),
                                       child: FFButtonWidget(
-                                        onPressed: () {
-                                          print(
-                                              'BookAppointmentButton pressed ...');
+                                        onPressed: () async {
+                                          logFirebaseEvent(
+                                              'ARTIST_DISPLAY_bookAppoinment_ON_TAP');
+                                          logFirebaseEvent(
+                                              'bookAppoinment_navigate_to');
+
+                                          context.pushNamed(
+                                            'EmailTestPage',
+                                            queryParameters: {
+                                              'artistEmail': serializeParam(
+                                                artistDisplayPageUsersRecord
+                                                    .email,
+                                                ParamType.String,
+                                              ),
+                                              'userEmail': serializeParam(
+                                                currentUserEmail,
+                                                ParamType.String,
+                                              ),
+                                            }.withoutNulls,
+                                          );
                                         },
                                         text: 'Book Appointment',
                                         options: FFButtonOptions(
@@ -233,14 +309,16 @@ class _ArtistDisplayPageWidgetState extends State<ArtistDisplayPageWidget>
                                                   0.0, 0.0, 0.0, 0.0),
                                           color: FlutterFlowTheme.of(context)
                                               .tertiary,
-                                          textStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .titleSmall
-                                                  .override(
-                                                    fontFamily: 'Inter Tight',
-                                                    color: Colors.white,
-                                                    letterSpacing: 0.0,
-                                                  ),
+                                          textStyle: FlutterFlowTheme.of(
+                                                  context)
+                                              .titleSmall
+                                              .override(
+                                                fontFamily: 'Inter Tight',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondary,
+                                                letterSpacing: 0.0,
+                                              ),
                                           elevation: 0.0,
                                           borderRadius:
                                               BorderRadius.circular(24.0),
@@ -308,10 +386,9 @@ class _ArtistDisplayPageWidgetState extends State<ArtistDisplayPageWidget>
                                                         (artistFlashPostRecord) =>
                                                             artistFlashPostRecord
                                                                 .where(
-                                                                  'postUser',
-                                                                  isEqualTo:
-                                                                      artistDisplayPageUsersRecord
-                                                                          .reference,
+                                                                  'uid',
+                                                                  isEqualTo: widget
+                                                                      .artistUID,
                                                                 )
                                                                 .orderBy(
                                                                     'timePosted',
@@ -360,69 +437,33 @@ class _ArtistDisplayPageWidgetState extends State<ArtistDisplayPageWidget>
                                                         final gridViewArtistFlashPostRecord =
                                                             gridViewArtistFlashPostRecordList[
                                                                 gridViewIndex];
-                                                        return StreamBuilder<
-                                                            UsersRecord>(
-                                                          stream: UsersRecord
-                                                              .getDocument(
-                                                                  gridViewArtistFlashPostRecord
-                                                                      .postUser!),
-                                                          builder: (context,
-                                                              snapshot) {
-                                                            // Customize what your widget looks like when it's loading.
-                                                            if (!snapshot
-                                                                .hasData) {
-                                                              return Center(
-                                                                child: SizedBox(
-                                                                  width: 50.0,
-                                                                  height: 50.0,
-                                                                  child:
-                                                                      CircularProgressIndicator(
-                                                                    valueColor:
-                                                                        AlwaysStoppedAnimation<
-                                                                            Color>(
-                                                                      FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .primary,
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                              );
-                                                            }
-
-                                                            final containerUsersRecord =
-                                                                snapshot.data!;
-
-                                                            return Container(
-                                                              width: 100.0,
-                                                              height: 100.0,
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .secondaryBackground,
-                                                                border:
-                                                                    Border.all(
-                                                                  color: Colors
-                                                                      .black,
-                                                                ),
-                                                              ),
-                                                              child: ClipRRect(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            0.0),
-                                                                child: Image
-                                                                    .network(
-                                                                  artistDisplayPageUsersRecord
-                                                                      .photoUrl,
-                                                                  width: 200.0,
-                                                                  height: 200.0,
-                                                                  fit: BoxFit
-                                                                      .cover,
-                                                                ),
-                                                              ),
-                                                            );
-                                                          },
+                                                        return Container(
+                                                          width: 100.0,
+                                                          height: 100.0,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .secondaryBackground,
+                                                            border: Border.all(
+                                                              color:
+                                                                  Colors.black,
+                                                            ),
+                                                          ),
+                                                          child: ClipRRect(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        0.0),
+                                                            child:
+                                                                Image.network(
+                                                              gridViewArtistFlashPostRecord
+                                                                  .flashPhoto,
+                                                              width: 200.0,
+                                                              height: 200.0,
+                                                              fit: BoxFit.cover,
+                                                            ),
+                                                          ),
                                                         );
                                                       },
                                                     );
@@ -444,10 +485,9 @@ class _ArtistDisplayPageWidgetState extends State<ArtistDisplayPageWidget>
                                                         (artistPortfolioPostRecord) =>
                                                             artistPortfolioPostRecord
                                                                 .where(
-                                                                  'postUser',
-                                                                  isEqualTo:
-                                                                      artistDisplayPageUsersRecord
-                                                                          .reference,
+                                                                  'uid',
+                                                                  isEqualTo: widget
+                                                                      .artistUID,
                                                                 )
                                                                 .orderBy(
                                                                     'timePosted',
@@ -496,69 +536,33 @@ class _ArtistDisplayPageWidgetState extends State<ArtistDisplayPageWidget>
                                                         final gridViewArtistPortfolioPostRecord =
                                                             gridViewArtistPortfolioPostRecordList[
                                                                 gridViewIndex];
-                                                        return StreamBuilder<
-                                                            UsersRecord>(
-                                                          stream: UsersRecord
-                                                              .getDocument(
-                                                                  gridViewArtistPortfolioPostRecord
-                                                                      .postUser!),
-                                                          builder: (context,
-                                                              snapshot) {
-                                                            // Customize what your widget looks like when it's loading.
-                                                            if (!snapshot
-                                                                .hasData) {
-                                                              return Center(
-                                                                child: SizedBox(
-                                                                  width: 50.0,
-                                                                  height: 50.0,
-                                                                  child:
-                                                                      CircularProgressIndicator(
-                                                                    valueColor:
-                                                                        AlwaysStoppedAnimation<
-                                                                            Color>(
-                                                                      FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .primary,
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                              );
-                                                            }
-
-                                                            final containerUsersRecord =
-                                                                snapshot.data!;
-
-                                                            return Container(
-                                                              width: 100.0,
-                                                              height: 100.0,
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .secondaryBackground,
-                                                                border:
-                                                                    Border.all(
-                                                                  color: Colors
-                                                                      .black,
-                                                                ),
-                                                              ),
-                                                              child: ClipRRect(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            0.0),
-                                                                child: Image
-                                                                    .network(
-                                                                  artistDisplayPageUsersRecord
-                                                                      .photoUrl,
-                                                                  width: 200.0,
-                                                                  height: 200.0,
-                                                                  fit: BoxFit
-                                                                      .cover,
-                                                                ),
-                                                              ),
-                                                            );
-                                                          },
+                                                        return Container(
+                                                          width: 100.0,
+                                                          height: 100.0,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .secondaryBackground,
+                                                            border: Border.all(
+                                                              color:
+                                                                  Colors.black,
+                                                            ),
+                                                          ),
+                                                          child: ClipRRect(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        0.0),
+                                                            child:
+                                                                Image.network(
+                                                              gridViewArtistPortfolioPostRecord
+                                                                  .portfolioPhoto,
+                                                              width: 200.0,
+                                                              height: 200.0,
+                                                              fit: BoxFit.cover,
+                                                            ),
+                                                          ),
                                                         );
                                                       },
                                                     );

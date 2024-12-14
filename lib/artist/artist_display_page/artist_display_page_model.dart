@@ -3,6 +3,12 @@ import 'artist_display_page_widget.dart' show ArtistDisplayPageWidget;
 import 'package:flutter/material.dart';
 
 class ArtistDisplayPageModel extends FlutterFlowModel<ArtistDisplayPageWidget> {
+  ///  Local state fields for this page.
+
+  DocumentReference? artistToLoad;
+
+  DocumentReference? artistEmail;
+
   ///  State fields for stateful widgets in this page.
 
   // State field(s) for TabBar widget.

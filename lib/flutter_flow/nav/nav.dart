@@ -73,14 +73,14 @@ GoRouter createRouter(AppStateNotifier appStateNotifier, [Widget? entryPage]) =>
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       errorBuilder: (context, state) => appStateNotifier.loggedIn
-          ? entryPage ?? const DummyPageWidget()
+          ? entryPage ?? const ExplorePageWidget()
           : const LoginPageWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
           builder: (context, _) => appStateNotifier.loggedIn
-              ? entryPage ?? const DummyPageWidget()
+              ? entryPage ?? const ExplorePageWidget()
               : const LoginPageWidget(),
         ),
         FFRoute(
@@ -116,12 +116,26 @@ GoRouter createRouter(AppStateNotifier appStateNotifier, [Widget? entryPage]) =>
         FFRoute(
           name: 'artistDisplayPage',
           path: '/artistDisplayPage',
-          builder: (context, params) => const ArtistDisplayPageWidget(),
+          builder: (context, params) => ArtistDisplayPageWidget(
+            artistUID: params.getParam(
+              'artistUID',
+              ParamType.String,
+            ),
+            userEmail: params.getParam(
+              'userEmail',
+              ParamType.String,
+            ),
+          ),
         ),
         FFRoute(
           name: 'userProfile',
           path: '/userProfile',
-          builder: (context, params) => const UserProfileWidget(),
+          builder: (context, params) => UserProfileWidget(
+            time: params.getParam(
+              'time',
+              ParamType.String,
+            ),
+          ),
         ),
         FFRoute(
           name: 'userSettings',
@@ -132,6 +146,68 @@ GoRouter createRouter(AppStateNotifier appStateNotifier, [Widget? entryPage]) =>
           name: 'artistProfile',
           path: '/artistProfile',
           builder: (context, params) => const ArtistProfileWidget(),
+        ),
+        FFRoute(
+          name: 'artistSettings',
+          path: '/artistSettings',
+          builder: (context, params) => const ArtistSettingsWidget(),
+        ),
+        FFRoute(
+          name: 'postPage',
+          path: '/postPage',
+          builder: (context, params) => PostPageWidget(
+            postArtist: params.getParam(
+              'postArtist',
+              ParamType.int,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: 'savedposts',
+          path: '/savedposts',
+          builder: (context, params) => const SavedpostsWidget(),
+        ),
+        FFRoute(
+          name: 'artistFlashPostPage',
+          path: '/artistFlashPost',
+          builder: (context, params) => ArtistFlashPostPageWidget(
+            flashPostArtistID: params.getParam(
+              'flashPostArtistID',
+              ParamType.String,
+            ),
+            timePosted: params.getParam(
+              'timePosted',
+              ParamType.DateTime,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: 'EmailTestPage',
+          path: '/emailTestPage',
+          builder: (context, params) => EmailTestPageWidget(
+            artistEmail: params.getParam(
+              'artistEmail',
+              ParamType.String,
+            ),
+            userEmail: params.getParam(
+              'userEmail',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: 'artistPortfolioPostPage',
+          path: '/artistPortfolioPostPage',
+          builder: (context, params) => ArtistPortfolioPostPageWidget(
+            portfolioPostArtistID: params.getParam(
+              'portfolioPostArtistID',
+              ParamType.String,
+            ),
+            timePosted: params.getParam(
+              'timePosted',
+              ParamType.DateTime,
+            ),
+          ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

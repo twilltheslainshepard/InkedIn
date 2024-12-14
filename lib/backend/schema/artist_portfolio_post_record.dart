@@ -35,6 +35,16 @@ class ArtistPortfolioPostRecord extends FirestoreRecord {
   DocumentReference? get postUser => _postUser;
   bool hasPostUser() => _postUser != null;
 
+  // "postArtistName" field.
+  String? _postArtistName;
+  String get postArtistName => _postArtistName ?? '';
+  bool hasPostArtistName() => _postArtistName != null;
+
+  // "uid" field.
+  String? _uid;
+  String get uid => _uid ?? '';
+  bool hasUid() => _uid != null;
+
   // "portfolioPhoto" field.
   String? _portfolioPhoto;
   String get portfolioPhoto => _portfolioPhoto ?? '';
@@ -45,6 +55,8 @@ class ArtistPortfolioPostRecord extends FirestoreRecord {
     _postDescription = snapshotData['postDescription'] as String?;
     _timePosted = snapshotData['timePosted'] as DateTime?;
     _postUser = snapshotData['postUser'] as DocumentReference?;
+    _postArtistName = snapshotData['postArtistName'] as String?;
+    _uid = snapshotData['uid'] as String?;
     _portfolioPhoto = snapshotData['portfolioPhoto'] as String?;
   }
 
@@ -88,6 +100,8 @@ Map<String, dynamic> createArtistPortfolioPostRecordData({
   String? postDescription,
   DateTime? timePosted,
   DocumentReference? postUser,
+  String? postArtistName,
+  String? uid,
   String? portfolioPhoto,
 }) {
   final firestoreData = mapToFirestore(
@@ -96,6 +110,8 @@ Map<String, dynamic> createArtistPortfolioPostRecordData({
       'postDescription': postDescription,
       'timePosted': timePosted,
       'postUser': postUser,
+      'postArtistName': postArtistName,
+      'uid': uid,
       'portfolioPhoto': portfolioPhoto,
     }.withoutNulls,
   );
@@ -113,6 +129,8 @@ class ArtistPortfolioPostRecordDocumentEquality
         e1?.postDescription == e2?.postDescription &&
         e1?.timePosted == e2?.timePosted &&
         e1?.postUser == e2?.postUser &&
+        e1?.postArtistName == e2?.postArtistName &&
+        e1?.uid == e2?.uid &&
         e1?.portfolioPhoto == e2?.portfolioPhoto;
   }
 
@@ -122,6 +140,8 @@ class ArtistPortfolioPostRecordDocumentEquality
         e?.postDescription,
         e?.timePosted,
         e?.postUser,
+        e?.postArtistName,
+        e?.uid,
         e?.portfolioPhoto
       ]);
 

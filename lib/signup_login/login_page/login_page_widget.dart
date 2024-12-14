@@ -43,7 +43,10 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
+      onTap: () {
+        FocusScope.of(context).unfocus();
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: Colors.white,
@@ -149,6 +152,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                     fontFamily: 'Inter',
                                     letterSpacing: 0.0,
                                   ),
+                              keyboardType: TextInputType.emailAddress,
                               cursorColor:
                                   FlutterFlowTheme.of(context).primaryText,
                               validator: _model
@@ -271,9 +275,26 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                           !_model.formKey.currentState!.validate()) {
                         return;
                       }
-                      logFirebaseEvent('Button_navigate_to');
+                      if (FFDevEnvironmentValues().loginNavigation == true) {
+                        if (valueOrDefault(
+                                currentUserDocument?.accountType, '') ==
+                            'business') {
+                          logFirebaseEvent('Button_navigate_to');
 
-                      context.goNamedAuth('DummyPage', context.mounted);
+                          context.pushNamedAuth(
+                              'artistProfile', context.mounted);
+                        } else {
+                          logFirebaseEvent('Button_navigate_to');
+
+                          context.pushNamedAuth('explorePage', context.mounted);
+                        }
+
+                        return;
+                      } else {
+                        logFirebaseEvent('Button_navigate_to');
+
+                        context.goNamedAuth('DummyPage', context.mounted);
+                      }
                     },
                     text: 'Login',
                     options: FFButtonOptions(
