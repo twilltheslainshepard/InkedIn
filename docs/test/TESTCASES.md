@@ -10,4 +10,4 @@
 
 •[US7: Post Creation](https://docs.google.com/presentation/d/1izVeg0lwgiXLig20wds37EOp1Mw1pdPrJ5gWijx_2rc/edit?usp=sharing)
 
-•[US5: Confirmation Email](https://docs.google.com/presentation/d/1izVeg0lwgiXLig20wds37EOp1Mw1pdPrJ5gWijx_2rc/edit?usp=sharing)
+•[US5: Confirmation Email](https://docs.google.com/presentation/d/1RX-fElkjgSZucOLW7vOYnj48YV4uQgkaOBxMn2B1x4k/edit?usp=sharing)
