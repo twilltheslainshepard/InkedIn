@@ -52,8 +52,8 @@ class ArtistFlashPostRecord extends FirestoreRecord {
   bool hasUid() => _uid != null;
 
   // "savedBy" field.
-  List<String>? _savedBy;
-  List<String> get savedBy => _savedBy ?? const [];
+  List<DocumentReference>? _savedBy;
+  List<DocumentReference> get savedBy => _savedBy ?? const [];
   bool hasSavedBy() => _savedBy != null;
 
   void _initializeFields() {

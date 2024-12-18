@@ -1,5 +1,7 @@
 import '/artist/confirmation_sheet/confirmation_sheet_widget.dart';
+import '/auth/firebase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -276,18 +278,17 @@ class _EmailTestPageWidgetState extends State<EmailTestPageWidget> {
                                 shouldSetState = true;
                                 if ((_model.apiResultdn4?.succeeded ?? true)) {
                                   logFirebaseEvent(
+                                      'appointmentButton_backend_call');
+
+                                  await currentUserReference!
+                                      .update(createUsersRecordData(
+                                    appointment: dateTimeFormat(
+                                        "M/d h:mm a", _model.datePicked),
+                                  ));
+                                  logFirebaseEvent(
                                       'appointmentButton_navigate_to');
 
-                                  context.pushNamed(
-                                    'userProfile',
-                                    queryParameters: {
-                                      'time': serializeParam(
-                                        dateTimeFormat(
-                                            "M/d h:mm a", _model.datePicked),
-                                        ParamType.String,
-                                      ),
-                                    }.withoutNulls,
-                                  );
+                                  context.pushNamed('userProfile');
                                 } else {
                                   if (shouldSetState) safeSetState(() {});
                                   return;

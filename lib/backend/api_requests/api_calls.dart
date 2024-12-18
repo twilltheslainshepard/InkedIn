@@ -64,6 +64,32 @@ class SendEmailToArtistCall {
   }
 }
 
+class AccountCreationConfirmationEmailCall {
+  static Future<ApiCallResponse> call({
+    String? userEmail = '',
+  }) async {
+    final ffApiRequestBody = '''
+{
+  "to": "${escapeStringForJson(userEmail)}"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'Account creation confirmation email',
+      apiUrl: 'https://accountcreationemail-ryaclepdjq-uc.a.run.app',
+      callType: ApiCallType.POST,
+      headers: {},
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
 class ApiPagingParams {
   int nextPageNumber = 0;
   int numItems = 0;

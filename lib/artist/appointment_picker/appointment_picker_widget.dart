@@ -233,23 +233,9 @@ class _AppointmentPickerWidgetState extends State<AppointmentPickerWidget> {
 
                     shouldSetState = true;
                     if ((_model.apiResultdn4?.succeeded ?? true)) {
-                      logFirebaseEvent('appointmentButton_backend_call');
-
-                      await currentUserReference!.update(createUsersRecordData(
-                        appointment:
-                            dateTimeFormat("M/d h:mm a", _model.datePicked),
-                      ));
                       logFirebaseEvent('appointmentButton_navigate_to');
 
-                      context.pushNamed(
-                        'userProfile',
-                        queryParameters: {
-                          'time': serializeParam(
-                            dateTimeFormat("M/d h:mm a", _model.datePicked),
-                            ParamType.String,
-                          ),
-                        }.withoutNulls,
-                      );
+                      context.pushNamed('userProfile');
                     } else {
                       if (shouldSetState) safeSetState(() {});
                       return;

@@ -96,6 +96,11 @@ class UsersRecord extends FirestoreRecord {
   String get appointment => _appointment ?? '';
   bool hasAppointment() => _appointment != null;
 
+  // "saved_posts_postArtist" field.
+  List<int>? _savedPostsPostArtist;
+  List<int> get savedPostsPostArtist => _savedPostsPostArtist ?? const [];
+  bool hasSavedPostsPostArtist() => _savedPostsPostArtist != null;
+
   void _initializeFields() {
     _email = snapshotData['email'] as String?;
     _displayName = snapshotData['display_name'] as String?;
@@ -113,6 +118,7 @@ class UsersRecord extends FirestoreRecord {
     _state = snapshotData['state'] as String?;
     _savedPosts = getDataList(snapshotData['saved_posts']);
     _appointment = snapshotData['appointment'] as String?;
+    _savedPostsPostArtist = getDataList(snapshotData['saved_posts_postArtist']);
   }
 
   static CollectionReference get collection =>
@@ -209,7 +215,8 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e1?.city == e2?.city &&
         e1?.state == e2?.state &&
         listEquality.equals(e1?.savedPosts, e2?.savedPosts) &&
-        e1?.appointment == e2?.appointment;
+        e1?.appointment == e2?.appointment &&
+        listEquality.equals(e1?.savedPostsPostArtist, e2?.savedPostsPostArtist);
   }
 
   @override
@@ -229,7 +236,8 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e?.city,
         e?.state,
         e?.savedPosts,
-        e?.appointment
+        e?.appointment,
+        e?.savedPostsPostArtist
       ]);
 
   @override

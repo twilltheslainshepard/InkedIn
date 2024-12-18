@@ -5,7 +5,6 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_toggle_icon.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'post_page_model.dart';
 export 'post_page_model.dart';
@@ -319,8 +318,10 @@ class _PostPageWidgetState extends State<PostPageWidget> {
                         stream: queryArtistFlashPostRecord(
                           queryBuilder: (artistFlashPostRecord) =>
                               artistFlashPostRecord.where(
-                            'savedBy',
-                            arrayContains: currentUserUid,
+                            'flashPhoto',
+                            isEqualTo: postPageArtistFlashPostRecordList
+                                .elementAtOrNull(widget.postArtist!)
+                                ?.flashPhoto,
                           ),
                           singleRecord: true,
                         ),
@@ -353,23 +354,97 @@ class _PostPageWidgetState extends State<PostPageWidget> {
 
                           return ToggleIcon(
                             onPressed: () async {
-                              safeSetState(() => _model.saved = !_model.saved);
+                              final savedByElement = currentUserReference;
+                              final savedByUpdate =
+                                  saveToggleArtistFlashPostRecord.savedBy
+                                          .contains(savedByElement)
+                                      ? FieldValue.arrayRemove([savedByElement])
+                                      : FieldValue.arrayUnion([savedByElement]);
+                              await saveToggleArtistFlashPostRecord.reference
+                                  .update({
+                                ...mapToFirestore(
+                                  {
+                                    'savedBy': savedByUpdate,
+                                  },
+                                ),
+                              });
                               logFirebaseEvent(
                                   'POST_PAGE_PAGE_saveToggle_ON_TOGGLE');
-                              logFirebaseEvent('saveToggle_firestore_query');
-                              await queryArtistFlashPostRecordOnce(
-                                queryBuilder: (artistFlashPostRecord) =>
-                                    artistFlashPostRecord.where(
-                                  'savedBy',
-                                  arrayContains: currentUserUid,
-                                ),
-                                singleRecord: true,
-                              ).then((s) => s.firstOrNull);
-                              logFirebaseEvent('saveToggle_update_page_state');
-                              _model.saved = false;
-                              safeSetState(() {});
+                              if (saveToggleArtistFlashPostRecord.savedBy
+                                  .contains(currentUserReference)) {
+                                logFirebaseEvent('saveToggle_backend_call');
+
+                                await saveToggleArtistFlashPostRecord.reference
+                                    .update({
+                                  ...mapToFirestore(
+                                    {
+                                      'savedBy': FieldValue.arrayRemove(
+                                          [currentUserReference]),
+                                    },
+                                  ),
+                                });
+                                logFirebaseEvent('saveToggle_backend_call');
+
+                                await currentUserReference!.update({
+                                  ...mapToFirestore(
+                                    {
+                                      'saved_posts': FieldValue.arrayRemove([
+                                        saveToggleArtistFlashPostRecord
+                                            .reference
+                                      ]),
+                                    },
+                                  ),
+                                });
+                                logFirebaseEvent('saveToggle_backend_call');
+
+                                await currentUserReference!.update({
+                                  ...mapToFirestore(
+                                    {
+                                      'saved_posts_postArtist':
+                                          FieldValue.arrayRemove(
+                                              [widget.postArtist]),
+                                    },
+                                  ),
+                                });
+                              } else {
+                                logFirebaseEvent('saveToggle_backend_call');
+
+                                await saveToggleArtistFlashPostRecord.reference
+                                    .update({
+                                  ...mapToFirestore(
+                                    {
+                                      'savedBy': FieldValue.arrayUnion(
+                                          [currentUserReference]),
+                                    },
+                                  ),
+                                });
+                                logFirebaseEvent('saveToggle_backend_call');
+
+                                await currentUserReference!.update({
+                                  ...mapToFirestore(
+                                    {
+                                      'saved_posts': FieldValue.arrayUnion([
+                                        saveToggleArtistFlashPostRecord
+                                            .reference
+                                      ]),
+                                    },
+                                  ),
+                                });
+                                logFirebaseEvent('saveToggle_backend_call');
+
+                                await currentUserReference!.update({
+                                  ...mapToFirestore(
+                                    {
+                                      'saved_posts_postArtist':
+                                          FieldValue.arrayUnion(
+                                              [widget.postArtist]),
+                                    },
+                                  ),
+                                });
+                              }
                             },
-                            value: _model.saved,
+                            value: saveToggleArtistFlashPostRecord!.savedBy
+                                .contains(currentUserReference),
                             onIcon: Icon(
                               Icons.star,
                               color: FlutterFlowTheme.of(context).primary,

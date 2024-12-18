@@ -9,12 +9,7 @@ import 'user_profile_model.dart';
 export 'user_profile_model.dart';
 
 class UserProfileWidget extends StatefulWidget {
-  const UserProfileWidget({
-    super.key,
-    this.time,
-  });
-
-  final String? time;
+  const UserProfileWidget({super.key});
 
   @override
   State<UserProfileWidget> createState() => _UserProfileWidgetState();
@@ -231,29 +226,34 @@ class _UserProfileWidgetState extends State<UserProfileWidget> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          if (_model.time != '')
-                                            Text(
-                                              'You have an appointment on',
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .labelMedium
-                                                      .override(
-                                                        fontFamily: 'Inter',
-                                                        letterSpacing: 0.0,
-                                                      ),
+                                          if (valueOrDefault(
+                                                      currentUserDocument
+                                                          ?.appointment,
+                                                      '') !=
+                                                  '')
+                                            AuthUserStreamWidget(
+                                              builder: (context) => Text(
+                                                'You have an appointment on',
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .labelMedium
+                                                        .override(
+                                                          fontFamily: 'Inter',
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                              ),
                                             ),
-                                          if (widget.time != null &&
-                                              widget.time != '')
+                                          if (userProfileUsersRecord
+                                                      .appointment !=
+                                                  '')
                                             Align(
                                               alignment: const AlignmentDirectional(
                                                   0.0, 0.0),
                                               child: Padding(
                                                 padding: const EdgeInsets.all(10.0),
                                                 child: Text(
-                                                  valueOrDefault<String>(
-                                                    widget.time,
-                                                    'null',
-                                                  ),
+                                                  userProfileUsersRecord
+                                                      .appointment,
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .labelMedium
