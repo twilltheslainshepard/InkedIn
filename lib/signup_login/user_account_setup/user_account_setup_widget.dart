@@ -126,6 +126,7 @@ class _UserAccountSetupWidgetState extends State<UserAccountSetupWidget> {
                             child: SizedBox(
                               width: 300.0,
                               child: TextFormField(
+                                key: const ValueKey('TextField_l297'),
                                 controller: _model.textController1,
                                 focusNode: _model.textFieldFocusNode1,
                                 autofocus: false,
@@ -214,6 +215,7 @@ class _UserAccountSetupWidgetState extends State<UserAccountSetupWidget> {
                             child: SizedBox(
                               width: 300.0,
                               child: TextFormField(
+                                key: const ValueKey('TextField_ob9y'),
                                 controller: _model.textController2,
                                 focusNode: _model.textFieldFocusNode2,
                                 autofocus: false,
@@ -375,6 +377,7 @@ class _UserAccountSetupWidgetState extends State<UserAccountSetupWidget> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   FFButtonWidget(
+                    key: const ValueKey('CreateAccountButton_5dz4'),
                     onPressed: () async {
                       logFirebaseEvent(
                           'USER_ACCOUNT_SETUP_CreateAccountButton_O');

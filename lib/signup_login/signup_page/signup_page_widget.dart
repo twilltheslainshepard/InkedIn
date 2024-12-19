@@ -91,6 +91,7 @@ class _SignupPageWidgetState extends State<SignupPageWidget> {
                     child: SizedBox(
                       width: double.infinity,
                       child: TextFormField(
+                        key: const ValueKey('Signup-Email_qv6h'),
                         controller: _model.signupEmailTextController,
                         focusNode: _model.signupEmailFocusNode,
                         autofocus: false,
@@ -157,6 +158,7 @@ class _SignupPageWidgetState extends State<SignupPageWidget> {
                     child: SizedBox(
                       width: double.infinity,
                       child: TextFormField(
+                        key: const ValueKey('Signup-Password_rt47'),
                         controller: _model.signupPasswordTextController,
                         focusNode: _model.signupPasswordFocusNode,
                         autofocus: false,
@@ -236,6 +238,7 @@ class _SignupPageWidgetState extends State<SignupPageWidget> {
                     child: SizedBox(
                       width: double.infinity,
                       child: TextFormField(
+                        key: const ValueKey('ConfirmPassword_g05n'),
                         controller: _model.confirmPasswordTextController,
                         focusNode: _model.confirmPasswordFocusNode,
                         autofocus: false,
@@ -359,6 +362,7 @@ class _SignupPageWidgetState extends State<SignupPageWidget> {
                     ),
                   ),
                   FFButtonWidget(
+                    key: const ValueKey('LoginButton_o1we'),
                     onPressed: () async {
                       logFirebaseEvent('SIGNUP_PAGE_PAGE_LoginButton_ON_TAP');
                       logFirebaseEvent('LoginButton_auth');

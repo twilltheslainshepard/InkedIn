@@ -335,6 +335,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                       context.pushNamed('SignupPage');
                     },
                     child: Text(
+                      key: const ValueKey('SIgnupLink_ol99'),
                       'Don\'t have an account? Sign up here!',
                       style: FlutterFlowTheme.of(context).bodyMedium.override(
                             fontFamily: 'Inter',

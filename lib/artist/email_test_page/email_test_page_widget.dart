@@ -250,6 +250,7 @@ class _EmailTestPageWidgetState extends State<EmailTestPageWidget> {
                             ),
                           ),
                           FFButtonWidget(
+                            key: const ValueKey('appointmentButton_h3r4'),
                             onPressed: () async {
                               logFirebaseEvent(
                                   'EMAIL_TEST_appointmentButton_ON_TAP');

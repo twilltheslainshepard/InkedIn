@@ -247,6 +247,7 @@ class _PostPageWidgetState extends State<PostPageWidget> {
                                                 const EdgeInsetsDirectional.fromSTEB(
                                                     0.0, 0.0, 30.0, 0.0),
                                             child: FlutterFlowIconButton(
+                                              key: const ValueKey('IconButton_75d3'),
                                               borderColor: Colors.transparent,
                                               borderRadius: 8.0,
                                               buttonSize: 65.0,

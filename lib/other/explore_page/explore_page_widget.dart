@@ -369,8 +369,10 @@ class _ExplorePageWidgetState extends State<ExplorePageWidget> {
                                   ),
                                 ),
                                 child: ClipRRect(
+                                  key: const ValueKey('Image_zaao'),
                                   borderRadius: BorderRadius.circular(0.0),
                                   child: Image.network(
+                                    key: const ValueKey('Image_zaao'),
                                     flashPostsItem.flashPhoto,
                                     width: 200.0,
                                     height: 200.0,

@@ -38,6 +38,67 @@ void main() async {
     await tester.pumpAndSettle(Duration(milliseconds: 3000));
     expect(find.text('Dummy Page'), findsOneWidget);
   });
+
+  testWidgets('explorePagetoArtistAccount', (WidgetTester tester) async {
+    _overrideOnError();
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: 'tawilliams1@uri.edu', password: 'hellohello');
+    await tester.pumpWidget(MyApp());
+
+    await tester.pumpAndSettle(Duration(milliseconds: 3000));
+    await tester.tap(find.byKey(ValueKey('Image_zaao')));
+    await tester.pumpAndSettle(Duration(milliseconds: 3000));
+    await tester.tap(find.byKey(ValueKey('IconButton_75d3')));
+    await tester.pumpAndSettle(Duration(milliseconds: 3000));
+    expect(find.byKey(ValueKey('artistProfile_gbyx')), findsWidgets);
+  });
+
+  testWidgets('US1 Account Creation', (WidgetTester tester) async {
+    _overrideOnError();
+
+    await tester.pumpWidget(MyApp());
+
+    await tester.tap(find.byKey(ValueKey('SIgnupLink_ol99')));
+    await tester.enterText(
+        find.byKey(ValueKey('Signup-Email_qv6h')), 'tempmail@mail.com');
+    await tester.enterText(
+        find.byKey(ValueKey('Signup-Password_rt47')), 'blah123');
+    await tester.enterText(
+        find.byKey(ValueKey('ConfirmPassword_g05n')), 'blah123');
+    await tester.tap(find.byKey(ValueKey('LoginButton_o1we')));
+    await tester.enterText(find.byKey(ValueKey('TextField_l297')), 'userName');
+    await tester.enterText(
+        find.byKey(ValueKey('TextField_ob9y')), 'address 123');
+    await tester.tap(find.byKey(ValueKey('CreateAccountButton_5dz4')));
+  });
+
+  testWidgets('US 5 - Confirmation Email', (WidgetTester tester) async {
+    _overrideOnError();
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: 'testing@gmail.com', password: 'test');
+    await tester.pumpWidget(MyApp());
+
+    // test
+    await tester.tap(find.byKey(ValueKey('Image_zaao')));
+    // test
+    await tester.tap(find.byKey(ValueKey('IconButton_75d3')));
+    // test
+    await tester.tap(find.byKey(ValueKey('bookAppoinment_9ujc')));
+    // test
+    await tester.tap(find.byKey(ValueKey('appointmentButton_h3r4')));
+  });
+
+  testWidgets('US7 - Upload Image', (WidgetTester tester) async {
+    _overrideOnError();
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: 'artistAccount@email.com', password: 'testtest');
+    await tester.pumpWidget(MyApp(
+      entryPage: ArtistProfileWidget(),
+    ));
+
+    await tester.tap(find.byKey(ValueKey('artistProfile_gbyx')));
+    await tester.pumpAndSettle(Duration(milliseconds: 3));
+  });
 }
 
 // There are certain types of errors that can happen during tests but
